@@ -1,3 +1,8 @@
 
 .vs/
-.vs/Kardo20/v16/.suo
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
