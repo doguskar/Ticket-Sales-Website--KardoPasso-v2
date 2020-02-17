@@ -1,0 +1,681 @@
+:root{
+	--shadow-clr: rgba(0,0,0,0.3);
+	--z-index: 1001;
+	--clr-0: #fff;
+	--clr-1: #f0f0f0;
+	--clr-2: #e9e9e9;
+	--clr-3: #d0d0d0;
+	--clr-4: #adadad;
+	--clr-5: #808080;
+	--clr-6: #646464;
+	--clr-7: #333333;
+	--clr-8: #1e1e1e;
+	--clr-9: #000;
+	--clr-10: #d9edf7;
+	--clr-11: #81cdf6;
+	--clr-12: #1980da;
+	--clr-13: #337ab7;
+	--clr-14: #0e639c;
+}
+:root .dark-theme{
+	--shadow-clr: rgba(255,255,255,0.3);
+	--clr-9: #d0d0d0;
+	--clr-8: #adadad;
+	--clr-7: #e9e9e9;
+	--clr-6: #fff;
+	--clr-5: #adadad;
+	--clr-4: #808080;
+	--clr-3: #646464;
+	--clr-2: #333333;
+	--clr-1: #1e1e1e;
+	--clr-0: #000;
+	--clr-10: #002E4D;
+}
+header.dk-header{
+	position:fixed;
+	z-index:var(--z-index);
+	top:0;
+	left:0;
+	width:100%;
+	height:55px;
+	padding:0px 15px;
+	box-shadow:var(--shadow-clr) 0px 2px 3px;
+	background-color:var(--clr-0);
+}
+header.dk-header .dh-nav-btn{
+	display:inline-block;
+	font-size:25px;
+	line-height:1;
+	padding:15px 5px;
+	cursor:pointer;
+	color:var(--clr-6);
+	float:left;
+}
+header.dk-header .dh-logo{
+	display:inline-block;
+	float:left;
+	margin-left:15px;
+}
+header.dk-header .dh-logo a{
+	text-decoration:none;
+}
+header.dk-header .dh-logo img{
+	max-height:55px;
+	padding: 10px 0px;
+	float:left;
+}
+header.dk-header .dh-logo span.logo-sub{
+	font-size:20px;
+	line-height:1;
+	padding: 25px 0px 10px 5px;
+	color: var(--clr-4);
+	float:left;
+}
+
+nav.dh-h-nav{
+	float:right;
+}
+nav.dh-h-nav > ul > li{
+	list-style:none;
+	display:inline-block;
+	float:left;
+	margin-right:5px;
+	position:relative;
+}
+nav.dh-h-nav > ul > li:last-child{
+	margin-right:0px;
+}
+nav.dh-h-nav > ul > li > a, nav.dh-h-nav > ul > li > span{
+	display:inline-block;
+	text-decoration:none;
+	font-size:18px;
+	padding:18.5px 10px 16.5px 10px;
+	border-bottom: 2px solid var(--clr-0);
+	color:var(--clr-6);
+	transition:0.3s border-color,0.3s background-color, 0.3s color;
+	cursor:pointer;
+}
+nav.dh-h-nav > ul > li > a:hover{
+	border-color:var(--clr-5);
+	color:var(--clr-5);
+}
+nav.dh-h-nav ul > li > ul{
+	position:absolute;
+	top:55px;
+	left:0;
+	background-color:var(--clr-0);
+	box-shadow:var(--shadow-clr) 0px 1px 2px;
+	min-width:100px;
+	padding:5px 0px;
+	border:1px solid var(--clr-3);
+	display:none;
+}
+nav.dh-h-nav ul > li:hover > ul{
+	display:block;
+}
+nav.dh-h-nav ul > li > ul::after{
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 10px;
+	border-width: 8px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-0) transparent;
+}
+nav.dh-h-nav ul > li > ul::before{
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 9px;
+	border-width: 9px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-3) transparent;
+}
+nav.dh-h-nav ul > li > ul > li{
+	display:block;
+	text-align:center;
+	background-color:var(--clr-0);
+}
+nav.dh-h-nav ul > li > ul > li > a{
+	display:block;
+	text-decoration:none;
+	padding:5px 10px;
+	font-size:14px;
+	color:var(--clr-6);
+}
+nav.dh-h-nav ul > li > ul > li > a:hover{
+	background-color:var(--clr-2);
+}
+@media only screen and (max-width: 992px){
+	nav.dh-h-nav{
+		display:none;
+	}
+}
+header.dk-header .dh-user{
+	float:right;
+	margin:0px 5px;
+}
+header.dk-header .dh-user a.dh-log-btn{
+	display:inline-block;
+	text-decoration:none;
+	font-size:20px;
+	font-weight:bold;
+	padding:8px 15px;
+	margin:7px 0px;
+	border:2px solid var(--clr-5);
+	border-radius:20px;
+	color:var(--clr-5);
+	background-color:var(--clr-1);
+	transition:0.3s background-color;
+}
+header.dk-header .dh-user a:hover.dh-log-btn{
+	background-color:var(--clr-0);
+}
+header.dk-header > .dh-user > a > img{
+	width:45px;
+	height:45px;
+	margin:5px 0px;
+	padding:5px;
+	border-radius:100%;
+	transition:0.3s padding;
+}
+header.dk-header > .dh-user > a > img:hover{
+	padding:3px;
+}
+header.dk-header .dh-shortcuts{
+	float:right;
+	padding:7.5px 5px;
+}
+header.dk-header .dh-shortcuts .dh-sc{
+	position:relative;
+	display:inline-block;
+}
+header.dk-header .dh-shortcuts .sc-num{
+	position:absolute;
+	top:4px;
+	right:4px;
+	background: #e12424;
+    color: #fff;
+    font-size: 9px;
+	line-height:1;
+    border-radius: 100%;
+    padding: 2px 4px;
+}
+header.dk-header .dh-shortcuts a i.fa{
+	font-size:20px;
+	line-height:1;
+	padding:10px;
+	color:var(--clr-6);
+	transition:0.3s color;
+}
+header.dk-header .dh-shortcuts a:hover i.fa{
+	color:var(--clr-8);
+}
+@media only screen and (max-width: 500px){
+	header.dk-header .dh-user{
+		display:none
+	}
+	header.dk-header .dh-shortcuts{
+		display:none
+	}
+}
+@media only screen and (max-width: 275px){
+	header.dk-header .dh-logo .logo-sub{
+		display:none
+	}
+}
+
+/* DK-APPS-BOX */
+.dk-apps-box{
+	position:fixed;
+	top:55px;
+	right:20px;
+	width:280px;
+	box-shadow:var(--shadow-clr) 0px -2px 20px;
+	background:var(--clr-0);
+	z-index:999;
+	text-align:center;
+	border-radius:3px;
+	display:none;
+}
+.dk-apps-box.active{
+	display:block;
+}
+.dk-apps-box::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 60px;
+	margin-left: -5px;
+	border-width: 8px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-0) transparent;
+}
+.dk-apps-box .aplications{
+	padding:15px;
+	max-height:339px;
+	overflow-y:auto;
+	overflow-x: hidden;
+}
+.dk-apps-box img{
+	display:block;
+	width:64px;
+	height:64px;
+	padding:5px;
+}
+.dk-apps-box a{
+	display:inline-block;
+	border:1px solid var(--clr-0);
+	border-radius:3px;
+	padding:0px 5.7px;
+	margin:10px 0px;
+	transition:0.3s;
+}
+.dk-apps-box a:hover{
+	transition:0.3s;
+	border-color:var(--clr-3);
+}
+.dk-apps-box .text{
+	display:block;
+	color:var(--clr-6);
+	font-size:12px;
+}
+.dk-apps-box a.all-app{
+	display:block;
+	border:none;
+	margin:0px;
+	padding:10px 0px;
+	background:var(--clr-1);
+	color:var(--clr-6);
+	font-size:12px;
+	border-radius:0px 0px 3px 3px;
+	border-top:1px solid var(--clr-3);
+}
+.dk-apps-box a.all-app:hover{
+	background:var(--clr-3);
+}
+.aplications-links{
+}
+/* DK-APPS-BOX END*/
+/* DK-NOTIFICATION-BOX*/
+
+.dk-notification-box{
+	position:fixed;
+	top:55px;
+	right:20px;
+	width:400px;
+	max-height:450px;
+	box-shadow:var(--shadow-clr) 0px -2px 20px;
+	background: var(--clr-0);
+	z-index:999;
+	border-radius:3px;
+	display:none;
+}
+.dk-notification-box.active{
+	display:block;
+}
+.dk-notification-box::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 97px;
+	margin-left: -5px;
+	border-width: 8px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-0) transparent;
+}
+.dk-notification-box-h{
+	font-size:24px;
+	color:var(--clr-4);
+	text-align:center;
+	font-weight:bold;
+	padding:10px;
+}
+.dk-notification-box-h img{
+	width:125px;
+	text-align:center;
+	padding:10px;
+}
+.dk-notification-box .notifications-link img{
+	width:32px;
+	height:32px;
+	margin:0px 14px;
+	float:left;
+}
+.dk-notification-box .notifications-link.unread{
+	background:var(--clr-10);
+}
+.dk-notification-box .noti-info{
+	display:inline-block;
+	width:339px;
+	font-size:12px;
+	color:var(--clr-6);
+	float:left;
+}
+.dk-notification-box .notifications-link:after{
+	content:"";
+	clear:both;
+	display:table;
+}
+.dk-notification-box .notifications-link{
+	transition:300ms;
+	position:relative;
+	padding:15px 0px;
+	border-bottom:1px solid var(--clr-3);
+	border-top:1px solid var(--clr-3);
+}
+.dk-notification-box .notifications-link:hover{
+	background:var(--clr-1);
+}
+.dk-notification-box .noti-info .header{
+	font-size:14px;
+	font-weight:bold;
+}
+.dk-notification-box .noti-info .explanation{
+	color:var(--clr-4);
+	/*...*/
+	max-width:339px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dk-notification-box .noti-info .date{
+	color:var(--clr-3);
+}
+.dk-notification-box a.all-noti{
+	text-align:center;
+	display:block;
+	border:none;
+	margin:0px;
+	padding:10px 0px;
+	background:var(--clr-1);
+	color:var(--clr-6);
+	font-size:12px;
+	border-radius:0px 0px 3px 3px;
+}
+.dk-notification-box a.all-noti:hover{
+	background:var(--clr-3);
+}
+.notifications-links{
+	max-height:336px;
+	overflow-y:auto;
+	overflow-x: hidden;
+}
+
+/* DK-NOTIFICATION-BOX END*/
+/* DK-messages-BOX*/
+
+.dk-messages-box{
+	position:fixed;
+	top:55px;
+	right:20px;
+	width:400px;
+	max-height:450px;
+	box-shadow:var(--shadow-clr) 0px -2px 20px;
+	background:var(--clr-0);
+	z-index:999;
+	border-radius:3px;
+	display:none;
+}
+.dk-messages-box.active{
+	display:block;
+}
+.dk-messages-box::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 140px;
+	margin-left: -5px;
+	border-width: 8px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-0) transparent;
+}
+.dk-message-box-h{
+	text-align:center;
+	padding:10px 0px;
+	font-weight:bold;
+	color:var(--clr-9);
+}
+.dk-messages-box .message-link img{
+	width:32px;
+	height:32px;
+	float:left;
+	margin:0px 14px;
+}
+.dk-messages-box .message-link{
+	transition:300ms;
+	position:relative;
+	padding:15px 0px;
+	border-bottom:1px solid var(--clr-3);
+	border-top:1px solid var(--clr-3);
+}
+.dk-messages-box .message-link:after{
+	content:"";
+	clear:both;
+	display:table;
+}
+.dk-messages-box .message-link.unread{
+	background:var(--clr-10);
+}
+.dk-messages-box .message-info{
+	display:inline-block;
+	width:339px;
+	font-size:13px;
+	color:var(--clr-6);
+	padding-right:20px;
+	position:relative;
+	float:left;
+}
+.dk-messages-box .message-link:hover{
+	background:var(--clr-1);
+}
+.dk-messages-box .message-info .header{
+	font-size:16px;
+	font-weight:bold;
+	margin-bottom:2px;
+}
+.dk-messages-box .message-info .explanation{
+	color:var(--clr-4);
+	/*...*/
+	max-width:339px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dk-messages-box .message-info .date{
+	color:var(--clr-3);
+	position:absolute;
+	top:0px;
+	right:20px;
+}
+.dk-messages-box a.all-messages{
+	text-align:center;
+	display:block;
+	border:none;
+	margin:0px;
+	padding:10px 0px;
+	background:var(--clr-1);
+	color:var(--clr-6);
+	font-size:12px;
+	border-radius:0px 0px 3px 3px;
+}
+.dk-messages-box a.all-messages:hover{
+	background:var(--clr-3);
+}
+.messages-links{
+	max-height:336px;
+	overflow-y:auto;
+	overflow-x: hidden;
+}
+/* DK-messages-BOX END*/
+/* DK-USER-BOX */
+.dk-user-box{
+	position:fixed;
+	top:55px;
+	right:20px;
+	width:310px;
+	box-shadow:var(--shadow-clr) 0px -2px 20px;
+	background:var(--clr-0);
+	z-index:999;
+	border-radius:3px;
+	display:none;
+}
+.dk-user-box.active{
+	display:block;
+}
+.dk-user-box::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 14px;
+	margin-left: -5px;
+	border-width: 8px;
+	border-style: solid;
+	border-color: transparent transparent var(--clr-0) transparent;
+} 
+.active-account{
+	padding:10px 20px;
+}
+.active-account:after{
+	content:"";
+	clear:both;
+	display:table;
+}
+.dk-user-box .active-account .user-photo{
+	float:left;
+	position:relative;
+	width:96px;
+	height:96px;
+}
+.dk-user-box .active-account .user-photo img{
+	width:96px;
+	height:96px;
+	border-radius:100%;
+}
+.dk-user-box .active-account .user-photo a{
+	position:absolute;
+	width:96px;
+	height:96px;
+	left:0px;
+	top:0px;
+	border-radius:100%;
+	background:rgba(0,0,0,0.6);
+	text-align:center;
+	padding:41px 0px;
+	color:var(--clr-0);
+	font-size:12px;
+	opacity:0;
+}
+.dk-user-box .active-account .user-photo a:hover{
+	opacity:1;
+}
+.dk-user-box .active-account .user-info{
+	float:left;
+	width:150px;
+	margin-left:20px;
+}
+.dk-user-box .active-account .user-info .user-rname{
+	font-weight:bold;
+}
+.dk-user-box .active-account .user-info .username{
+	font-size:12px;
+	line-height:12px;
+	color:var(--clr-6);
+}
+.dk-user-box .active-account .user-info .user-profil-link{
+	margin-top:20px;
+}
+.other-accounts{
+	position:relative;
+    max-height: 240px;
+    overflow-y:auto;
+}
+.other-accounts .accounts-item{
+    position:relative;
+	height:60px;
+	background:var(--clr-1);
+	border-top:1px solid var(--clr-3);
+	transition:0.3s;
+}
+.other-accounts .accounts-item a{
+	text-decoration:none;
+}
+.other-accounts .accounts-item img{
+	width:48px;
+	height:48px;
+	border-radius:100%;
+	position:absolute;
+	top:6px;
+	left:20px;
+}
+.other-accounts .accounts-item .user-rname{
+	padding-left:78px;
+	color:var(--clr-7);
+	font-size:15px;
+	line-height:1;
+	margin-bottom:5px;
+	margin-top:4px;
+	padding-top:10px;
+}
+.other-accounts .accounts-item .username{
+	padding-left:78px;
+	color:var(--clr-6);
+	font-size:12px;
+	line-height:1;
+	font-weight:normal;
+	margin-bottom:3px;
+	padding-bottom:10px;
+}
+.other-accounts .accounts-item:hover{
+	background:var(--clr-2);
+}
+.dk-user-box-log{
+	background:var(--clr-1);
+	text-align:center;
+	border-top:1px var(--clr-3) solid;
+	padding:5px;
+}
+.dk-user-box a.dk-btn{
+	display:inline-block;
+	border:1px solid var(--clr-5);
+	background-color:var(--clr-1);
+	color:var(--clr-5);
+	padding:5px 10px;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	border-radius:3px;
+	transition:0.3s background-color, 0.3s color;
+}
+.dk-user-box a.dk-btn:hover{
+	background-color:var(--clr-0);
+}
+.dk-user-box .user-profil-link a.dk-btn{
+	border-color:#0e639c;
+	background-color:#1980da;
+	color:#fff;
+}
+.dk-user-box .user-profil-link a.dk-btn:hover{
+	background-color:#0e639c;
+}
+.dk-user-box .dk-user-box-log a.dk-btn{
+	width:45%;
+}
+
+/* DK-USER-BOX END*/
+.dk-apps-box a, .dk-messages-box a, .dk-notification-box a{
+	text-decoration:none;
+	color:var(--clr-6);
+	font-weight:bold;
+	transition:0.3s background-color, 0.3s color;
+}
+/** scrool bar **/
+.messages-links::-webkit-scrollbar, .notifications-links::-webkit-scrollbar, .other-accounts::-webkit-scrollbar {
+  width: 1px;
+}
+.messages-links::-webkit-scrollbar-track, .notifications-links::-webkit-scrollbar-track, .other-accounts::-webkit-scrollbar-track{
+  background: var(--clr-0); 
+}
+.messages-links::-webkit-scrollbar-thumb, .notifications-links::-webkit-scrollbar-thumb, .other-accounts::-webkit-scrollbar-thumb{
+  background: var(--clr-12); 
+}

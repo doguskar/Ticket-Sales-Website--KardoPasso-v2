@@ -1,0 +1,34 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/mayer-reset/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/fontawesome-free-5.9.0/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/bootstrap-4.3.1/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-style2019/css/dk-style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-style2019/assets/TextInputEffects/css/set2.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/kardo.css" />
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <section class="content-section-table bg-img">
+        <div class="middle shadow">
+            @RenderBody()
+        </div>
+    </section>
+    <footer class="sm-fix-footer">
+        <ul>
+            <li>©2018 Kardo</li>
+            <li>©2018 Kardo2</li>
+            <li><a href="#">©2018 Kardo3</a></li>
+        </ul>
+    </footer>
+
+    <script type="text/javascript" src="~/Content/assets/dk-style2019/js/dk-style.js"></script>
+    <script type="text/javascript" src="~/Content/js/members.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

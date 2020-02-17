@@ -1,48 +1,316 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Kardo20</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/mayer-reset/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/fontawesome-free-5.9.0/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/bootstrap-4.3.1/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-nav/css/dk-nav.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-header/css/dk-header.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/kardo.css" />
+    @RenderSection("Head", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kardo20</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+<body class="">
+    <header class="dk-header">
+        <div id="dk-navbtn" class="dh-nav-btn">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="dh-logo">
+            <a href="#">
+                <img src="~/Content/img/systemPics/kardo.png" alt="Kardo" />
+                <span class="logo-sub">DkStyle</span>
+            </a>
+        </div>
+        <div class="dh-user">
+            <a href="#" class="dh-log-btn" style="display:none;">Login</a>
+            <a href="#" data-dropdown="dk-user-box"><img src="~/Content/img/systemPics/kardo-icon.png" alt="ppic" /></a>
+            <div id="dk-user-box" class="dk-user-box hidden-xs">
+                <div class="active-account">
+                    <div class="user-photo">
+                        <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                        <a href="#">Fotorafı Değiştir</a>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-rname">Kardo</div>
+                        <div class="username">&#40Kardo</div>
+                        <div class="user-profil-link"><a href="#" class="dk-btn dk-btn-primary">Profile Git</a></div>
+                    </div>
+                    <div class="clear-both"></div>
+                </div>
+                <div class="other-accounts">
+                    <div class="accounts-item">
+                        <a href="#">
+                            <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                            <div class="user-rname">Kardo</div>
+                            <div class="username">&#40Kardo</div>
+                        </a>
+                    </div>
+                    <div class="accounts-item">
+                        <a href="#">
+                            <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                            <div class="user-rname">Kardo</div>
+                            <div class="username">&#40Kardo</div>
+                        </a>
+                    </div>
+                    <div class="accounts-item">
+                        <a href="#">
+                            <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                            <div class="user-rname">Kardo</div>
+                            <div class="username">&#40Kardo</div>
+                        </a>
+                    </div>
+                    <div class="accounts-item">
+                        <a href="#">
+                            <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                            <div class="user-rname">Kardo</div>
+                            <div class="username">&#40Kardo</div>
+                        </a>
+                    </div>
+                    <div class="accounts-item">
+                        <a href="#">
+                            <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                            <div class="user-rname">Kardo</div>
+                            <div class="username">&#40Kardo</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="dk-user-box-log">
+                    <a href="#" class="dk-btn">Hesap Ekle</a>
+                    <a href="#" class="dk-btn">Oturumu Kapat</a>
                 </div>
             </div>
+        </div>
+        <div class="dh-shortcuts">
+            <div class="dh-sc">
+                <a href="#" data-dropdown="dk-messages-box">
+                    <i class="fa fa-envelope"></i>
+                    <div class="sc-num">2</div>
+                </a>
+                <div id="dk-messages-box" class="dk-messages-box hidden-xs">
+                    <div class="dk-message-box-h">Mesajlar(2)</div>
+                    <div class="messages-links">
+                        <a href="#">
+                            <div class="message-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="message-link unread">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="message-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="message-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="message-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="message-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="message-info">
+                                    <div class="header">Doğuş Kar</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="all-messages">Tümünü Gör</a>
+                </div>
+            </div>
+            <div class="dh-sc">
+                <a href="javascript:;" data-dropdown="dk-notification-box">
+                    <i class="fa fa-bell"></i>
+                    <div class="sc-num">9</div>
+                </a>
+                <div id="dk-notification-box" class="dk-notification-box hidden-xs">
+                    <div class="notifications-links">
+                        <div class="dk-notification-box-h"><img src="~/Content/img/systemPics/kardo.png" alt="" /></div>
+                        <a href="#">
+                            <div class="notifications-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="noti-info">
+                                    <div class="header">Bildirim başlık</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="notifications-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="noti-info">
+                                    <div class="header">Bildirim başlık</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="notifications-link unread">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="noti-info">
+                                    <div class="header">Bildirim başlık</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="notifications-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="noti-info">
+                                    <div class="header">Bildirim başlık</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="notifications-link">
+                                <img src="~/Content/img/systemPics/kardo-k.png" alt="" />
+                                <div class="noti-info">
+                                    <div class="header">Bildirim başlık</div>
+                                    <div class="explanation">Kısa Açıklama açıklama açıklama açıklama açıklama açıklama...</div>
+                                    <div class="date">01:48 | 21.08.2017</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="all-noti">Tümünü Gör</a>
+                </div>
+            </div>
+            <div class="dh-sc">
+                <a href="#" data-dropdown="dk-apps-box">
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <div id="dk-apps-box" class="dk-apps-box hidden-xs">
+                    <div class="aplications">
+                        <div class="aplications-links">
+                            <a href="colors.html"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Colors</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                            <a href="#"><img src="~/Content/img/systemPics/kardo-icon.png" alt="" /><span class="text">Kardo</span></a>
+                        </div>
+                    </div>
+                    <a href="#" class="all-app">Daha Fazlası</a>
+                </div>
+            </div>
+        </div>
+        <nav class="dh-h-nav">
+            <ul>
+                <li>
+                    <span>Nested</span>
+                    <ul>
+                        <li><a href="#">SubLink</a></li>
+                        <li><a href="#">SubLink</a></li>
+                        <li><a href="#">SubLink</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">HomePage</a></li>
+                <li><a href="#">HomePage1</a></li>
+                <li><a href="#">HomePage2</a></li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Kardo20 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <nav id="dk-nav" class="dk-nav">
+        <div class="dk-nav-header">
+            <a href="#">
+                <img src="~/Content/img/systemPics/kardo.png" alt="Kardo" />
+                <span class="header-sub"></span>
+            </a>
+            <span class="dk-nav-header-btn"><i class="fa fa-chevron-left"></i></span>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <div class="dk-nav-sec">
+            <a href="javascript:;" class="dk-btn sharp-btn">Login</a>
+        </div>
+        <div class="dk-nav-sec">
+            <a href="javascript:;" class="dk-nav-user">
+                <img src="~/Content/img/systemPics/kardo-icon.png" alt="" />
+                <span>Doğuş Kar</span>
+            </a>
+        </div>
+        <ul>
+            <li><a href="#"><i class="fa fa-home"></i><span>HomePage</span></a></li>
+            <li>
+                <a href="javascript:;"><i class="fa fa-home"></i><span>Nested Links</span></a>
+                <ul>
+                    <li><a href="#">sub link</a></li>
+                    <li><a href="#">sub link</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-home"></i><span>HomePage</span></a></li>
+        </ul>
+        <div class="dk-nav-sec">
+            <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-twitter"></i></a>
+            <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-twitch"></i></a>
+        </div>
+        <div class="dk-nav-footer">
+            <a href="#"><img src="~/Content/img/systemPics/kardo.png" alt="Kardo" /></a>
+            <div>Copyright © 2019</div>
+        </div>
+    </nav>
+    <section id="container" class="container col-12">
+        @RenderBody()
+    </section>
+
+
+    <script type="text/javascript" src="~/Content/assets/dk-nav/js/dk-nav.js"></script>
+    <script type="text/javascript">
+        dkNavigator({
+            id: "dk-nav",
+            navbtnId: "dk-navbtn",
+            navTop: 55,
+            articleId: "container",
+            type: "advanced",
+            //theme: "dark-theme",
+            zIndex: 1000 //header's zIndex -1
+        });
+    </script>
+    <script src="~/Content/assets/dk-header/js/dk-header.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
