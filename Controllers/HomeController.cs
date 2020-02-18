@@ -17,6 +17,7 @@ namespace Kardo20.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISession _session;
         private readonly SessionModel Sessions;
+        private readonly CookieModel Cookies;
 
         public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
@@ -24,6 +25,7 @@ namespace Kardo20.Controllers
             _httpContextAccessor = httpContextAccessor;
             _session = _httpContextAccessor.HttpContext.Session;
             Sessions = new SessionModel(_session);
+            Cookies = new CookieModel(_httpContextAccessor);
         }
 
         public IActionResult Index()
