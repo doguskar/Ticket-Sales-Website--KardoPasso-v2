@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Kardo20.Models;
+using Microsoft.AspNetCore.Http;
+using Kardo2020.Models;
 
 namespace Kardo20.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISession _session;
+        private readonly SessionModel Sessions;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
+            _session = _httpContextAccessor.HttpContext.Session;
+            Sessions = new SessionModel(_session);
         }
 
         public IActionResult Index()
