@@ -7,16 +7,25 @@ namespace Kardo2020.Models
     public class SessionModel
     {
         private readonly ISession _session;
-        public string UserName
+        
+        
+        public string UserUID
         {
-            get => Get<string>("UserName");
-            set => Set("UserName", value);
+            get => Get<string>("UserUID");
+            set => Set("UserUID", value);
         }
-        public List<string> arr
+        public int LoginAttempts
         {
-            get => Get<List<string>>("arr");
-            set => Set("arr", value);
+            get => Get<int>("LoginAttempts");
+            set => Set("LoginAttempts", value);
         }
+
+
+
+
+
+
+
         public SessionModel(ISession session)
         {
             _session = session;

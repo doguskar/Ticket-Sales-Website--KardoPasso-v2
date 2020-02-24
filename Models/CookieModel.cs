@@ -12,16 +12,22 @@ namespace Kardo2020.Models
         private readonly IResponseCookies _response;
         private readonly IRequestCookieCollection _request;
 
-        public string UserName
+        public string LanguagePreference
         {
-            get => Get<string>("UserName");
-            set => Set("UserName", value);
+            get => Get<string>("LanguagePreference");
+            set => Set("LanguagePreference", value);
         }
-        public List<LoginCookies> deneme
+        public List<LoginCookie> LoginCookies
         {
-            get => Get<List<LoginCookies>>("deneme");
-            set => Set("deneme", value);
+            get => Get< List<LoginCookie>>("LoginCookies");
+            set => Set("LoginCookies", value);
         }
+
+
+
+
+
+
 
         public CookieModel(IHttpContextAccessor httpContextAccessor)
         {
