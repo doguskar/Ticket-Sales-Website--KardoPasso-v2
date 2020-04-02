@@ -1,85 +1,90 @@
-﻿@model  LoginRequest
+﻿@model LoginRequest
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Centered.cshtml";
 }
 
 
-    <div class="dk-signin-box" id="dk-signin-box">
-        <div class="box-head-sec">
-            <a href="index.html">
-                <img src="~/Content/img/systemPics/kardo-icon.png" />
-                <div class="header">Kardo</div>
-            </a>
-            <div class="back-btn"><a href="index.html"><i class="fa fa-chevron-left"></i></a></div>
-        </div>
-        <!-- Password Section -->
-        <div class="user-info" style="display:none;">
-            <div class="text">DogusKar</div>
-            <img src="~/Content/img/systemPics/user.png" />
-        </div>
-        <!-- Password Section -->
-        <div class="box-content-sec">
-            <div class="box-content-login">
-                <div class="warnings"></div>
-                <form id="loginForm" method="post" asp-controller="Members" asp-action="Login">
-                    <div class="login-steps active" id="login-step-1">
-                        <div class="header">Log In</div>
-                        <span class="input input--nao">
-                            <input id="loginKey" class="input__field input__field--nao" type="text" asp-for="LoginKey" />
-                            <label class="input__label input__label--nao">
-                                <span class="input__label-content input__label-content--nao">Username, E-mail</span>
-                            </label>
-                            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
-                            </svg>
-                        </span>
-
-                        <input id="loginNextBtn" type="button" value="Next" class="dk-btn btn-wide btn-primary" />
-                        <div class="header">Saved Accounts</div>
-                        <div class="other-accounts">
-                            <div class="accounts-item">
-                                <a href="#">
-                                    <img src="~/Content/img/systemPics/kardo-icon.png" />
-                                    <div class="user-rname">Kardo</div>
-                                    <div class="username">&#40Kardo</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="login-steps passive" id="login-step-2">
-                        <div class="header">Log In</div>
-                        <span class="input input--nao">
-                            <input class="input__field input__field--nao" type="password" asp-for="Password" />
-                            <label class="input__label input__label--nao">
-                                <span class="input__label-content input__label-content--nao">Password</span>
-                            </label>
-                            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
-                            </svg>
-                        </span>
-                        <div class="row">
-                            <div class="col-6" style="padding-right:5px"><input id="loginBackBtn" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
-                            <div class="col-6" style="padding-left:5px"><input type="submit" value="Log In" class="dk-btn btn-wide btn-primary" /></div>
-                        </div>
-                        <label class="dk-cbox" style="margin-top:12px;">
-                            <input type="checkbox" asp-for="RememberMe"/>
-                            <span class="dk-cbox">
-                                <span></span>
-                            </span>
-                            <span class="text">Oturumu Açık Bırak</span>
+<div class="dk-signin-box" id="dk-signin-box">
+    <div class="box-head-sec">
+        <a href="index.html">
+            <img src="~/Content/img/systemPics/kardo-icon.png" />
+            <div class="header">Kardo</div>
+        </a>
+        <div class="back-btn"><a href="index.html"><i class="fa fa-chevron-left"></i></a></div>
+    </div>
+    <!-- Password Section -->
+    <div class="user-info" style="display:none;">
+        <div class="text">DogusKar</div>
+        <img src="~/Content/img/systemPics/user.png" />
+    </div>
+    <!-- Password Section -->
+    <div class="box-content-sec">
+        <div class="box-content-login">
+            <form id="loginForm" method="post" asp-controller="Members" asp-action="Login">
+                <div class="login-steps active" id="login-step-1">
+                    <div class="header">Log In</div>
+                    <div class="warnings"></div>
+                    <span class="input input--nao">
+                        <input id="loginKey" class="input__field input__field--nao" type="text" asp-for="LoginKey" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Username, E-mail</span>
                         </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+
+                    <input id="loginNextBtn" type="button" value="Next" class="dk-btn btn-wide btn-primary" />
+                    <div class="header">Saved Accounts</div>
+                    <div class="other-accounts">
+                        <div class="accounts-item">
+                            <a href="#">
+                                <img src="~/Content/img/systemPics/kardo-icon.png" />
+                                <div class="user-rname">Kardo</div>
+                                <div class="username">&#40Kardo</div>
+                            </a>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="box-footer-sec">
-                <div style="font-size:12px;">
-                    <span>Hesabınız yok mu? </span>
-                    <a href="javascript:;" id="register_link">Bir hesap oluştur!</a>
-                    <br><br>
-                    <span>Şifreni mi unuttun? </span>
-                    <a href="javascript:;">Şifreni sıfırla!</a>
                 </div>
+                <div class="login-steps passive" id="login-step-2">
+                    <div class="header">Log In</div>
+                    <span class="input input--nao">
+                        <input class="input__field input__field--nao" type="password" asp-for="Password" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Password</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <div class="row">
+                        <div class="col-6" style="padding-right:5px"><input id="loginBackBtn" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
+                        <div class="col-6" style="padding-left:5px"><input type="submit" value="Log In" class="dk-btn btn-wide btn-primary" /></div>
+                    </div>
+                    <label class="dk-cbox" style="margin-top:12px;">
+                        <input type="checkbox" asp-for="RememberMe" />
+                        <span class="dk-cbox">
+                            <span></span>
+                        </span>
+                        <span class="text">Oturumu Açık Bırak</span>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="box-footer-sec">
+            <div style="font-size:12px;">
+                <span>Hesabınız yok mu? </span>
+                <a href="javascript:;" id="register_link">Bir hesap oluştur!</a>
+                <br><br>
+                <span>Şifreni mi unuttun? </span>
+                <a href="javascript:;">Şifreni sıfırla!</a>
             </div>
         </div>
     </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Content/js/members.js"></script>
+    <script type="text/javascript" src="~/Content/assets/jquery/jquery-3.4.1.min.js"></script>
+}
