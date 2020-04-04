@@ -1,18 +1,17 @@
 /* Sign In */
-if(document.getElementById("loginForm"))
+if (document.getElementById("loginForm"))
     document.getElementById("loginForm").addEventListener("submit", function formControl(e) {
         e.preventDefault();
         if(!$("#loginForm").valid())
             return;
         //Pressed enter in username input
         if(document.getElementById("signInStepUserKey").classList.contains("active")){
-            loginNextStep();
+            showLoginStep2();
         }
         //Submitted form
         else if (document.getElementById("signInStepPassword").classList.contains("active")) {
-
-            showLoading(document.getElementById("dk-signin-box").querySelector(".box-content-sec"));
-
+            //There is an error
+            //showLoading(document.getElementById("dk-signin-box").querySelector(".box-content-sec"));
             $.ajax({
                 type: "POST",
                 url: "/Members/Login",
@@ -20,6 +19,7 @@ if(document.getElementById("loginForm"))
                 success: function (json) {
                     var loginReply = JSON.parse(json);
                     if (loginReply.result) {
+                        
                         //Success Login
                         if (loginReply.redirectAddress) {
                             window.location.href = loginReply.redirectAddress;
@@ -33,16 +33,19 @@ if(document.getElementById("loginForm"))
                             showWarn("Invalid username or password!");
                         }
                     }
+                    //removeLoading();
                 },
                 error: function () {
+                    //removeLoading();
                 }
             })
 
-            removeLoading();
         }
     });
-if(document.getElementById("loginNextBtn"))
+if (document.getElementById("loginNextBtn")) {
+    debugger
     document.getElementById("loginNextBtn").addEventListener("click", () => showLoginStep2());
+}
 if(document.getElementById("loginBackBtn"))
     document.getElementById("loginBackBtn").addEventListener("click", () => showLoginStep1());
 
@@ -301,9 +304,12 @@ function showLoading(e){
     html +=     '<div class="out-of-middle"><div class="middle"><div class="cssload-container"><div class="cssload-lt"></div><div class="cssload-rt"></div><div class="cssload-lb"></div><div class="cssload-rb"></div></div></div></div>';
     html += '</div>';
     e.innerHTML += html;
+    return;
 }
-function removeLoading(){debugger
+function removeLoading(){
     var e = document.getElementById("dk-loading-sec");
     if(e)
         e.parentElement.removeChild(e);
+
+    return;
 }
