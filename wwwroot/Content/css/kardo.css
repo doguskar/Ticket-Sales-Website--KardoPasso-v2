@@ -82,6 +82,7 @@ section.container{
 	border-radius:3px;
 	background:#fff;
 	z-index:999;
+	position: relative;
 }
 .dk-signin-box .box-head-sec{
 	position:relative;
@@ -179,7 +180,9 @@ section.container{
    color:#F20000;
    font-weight:normal;
 }
-.dk-signin-box .box-content-sec select, .sign-content-sec select{
+.dk-signin-box .box-content-sec select, 
+.sign-content-sec select,
+.dk-signin-box .box-content-sec input[type="date"] {
    width:100%;
    font-size:14px;
    line-height:1;
@@ -203,6 +206,8 @@ section.container{
 }
 .dk-signin-box .box-content-sec input[type="text"], 
 .dk-signin-box .box-content-sec input[type="password"], 
+.dk-signin-box .box-content-sec input[type="email"], 
+.dk-signin-box .box-content-sec input[type="date"], 
 .dk-signin-box .box-content-sec select,
 .sign-content-sec input[type="text"], 
 .sign-content-sec input[type="password"], 
@@ -247,6 +252,7 @@ section.container{
 	background:#f0f0f0;
 	border-top:1px solid #d0d0d0;
 	transition:0.3s;
+	cursor: pointer;
 }
 .other-accounts .accounts-item img{
 	width:48px;
@@ -307,9 +313,10 @@ section.container{
    opacity:0;
    overflow: hidden;
    z-index:-999;
-   transition: 0.3s;
+   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.0s, z-index 0s linear 0.01s;
    padding:0;
 }
+/* Remove */
 .login-step-1-footer.active{
    height:auto;
    opacity:1;
@@ -336,6 +343,7 @@ section.container{
    z-index:-999;
    transition: 0.3s;
 }
+/* Remove  end*/
 .dk-signin-box .user-info .text{
    display:block;
    background:#646464;
@@ -355,7 +363,8 @@ section.container{
 }
 .dk-signin-box .box-footer-sec{
    margin-top:10px;
-   padding:0px 20px;
+   font-size: 12px;
+   line-height: 1.5;
 }
 
 
@@ -419,6 +428,33 @@ section.container{
 .dk-signin-box .input__field--nao:focus + .input__label--nao, .dk-signin-box  .input--filled .input__label--nao{
 	color:var(--clr-14);
 }
+
+.dk-signin-box label.form-error,
+.dk-signin-box label.form_error
+{
+	color:red;
+	font-size: 14px;
+}
+.dk-signin-box input.form_error
+{
+	color:red;
+}/*
+#form_errors.warnings{
+	margin: 10px 0px;
+}
+#form_errors.warnings ul li{
+	color: #c80000;
+	background-color: #f2dede;
+	padding: 2.5px 10px 2.5px 10px;
+}
+#form_errors.warnings ul li:first-child{
+	padding-top: 10px;
+	border-radius: 3px 3px 0px 0px;
+}
+#form_errors.warnings ul li:last-child{
+	padding-bottom: 10px;
+	border-radius: 0px 0px 3px 3px;
+}*/
 
 .sm-fix-footer{
 	background:#fff;

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>Members</title>
+	
+	<link rel="stylesheet" type="text/css" href="assets/mayer-reset/css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="assets/fontawesome-free-5.9.0/css/all.min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap-4.3.1/css/bootstrap-grid.min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/dk-style2019/css/dk-style.css" />
+	<link rel="stylesheet" type="text/css" href="assets/dk-style2019/assets/TextInputEffects/css/set2.css" />
+	<link rel="stylesheet" type="text/css" href="assets/cssload/cssload-Michael.css" />
+	<link rel="stylesheet" type="text/css" href="css/kardo.css" />
+
+	
+</head>
+<body>
+	<section class="content-section-table bg-img">
+		<div class="middle shadow">
+			<div class="dk-signin-box" id="dk-signin-box">
+				<div class="box-head-sec">
+					<a href="index.html">
+						<img src="img/systemPics/kardo-icon.png"/>
+						<div class="header">Kardo</div>
+					</a>
+					<div class="back-btn"><a href="index.html"><i class="fa fa-chevron-left"></i></a></div>
+				</div>
+				<!-- Password Section -->
+				<div class="user-info" style="display:none;">
+					<div class="text">DogusKar</div>
+					<img src="img/systemPics/user.png"/>
+				</div>
+				<!-- Password Section -->
+				<div class="box-content-sec">
+					<div class="box-content-register">
+						<form id="signUpForm" method="post">
+							<div id="form_errors" class="warnings"></div>
+							<div class="register-steps active" id="signUpStep1">
+								<div class="header">Sing Up</div>
+								<div class="text"  style="margin-bottom: 0;">Kardo hesabınız size avantajlı bir dünyanın kapılarını açar.</div>
+
+								<span class="input input--nao" style="margin-bottom: 0;">
+									<input id="r_user_name" name="r_user_name" class="input__field input__field--nao" type="text"/>
+									<label class="input__label input__label--nao">
+										<span class="input__label-content input__label-content--nao">Username</span>
+									</label>
+									<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+										<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+									</svg>
+								</span>
+								<label id="r_user_name-error" class="form-error" for="r_user_name"></label>
+								
+								<span class="input input--nao" style="margin-bottom: 0;">
+									<input id="r_eposta" name="r_eposta" class="input__field input__field--nao" type="email"/>
+									<label class="input__label input__label--nao">
+										<span class="input__label-content input__label-content--nao">E-mail</span>
+									</label>
+									<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+										<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+									</svg>
+								</span>
+								<label id="r_eposta-error" class="form-error" for="r_eposta"></label>
+								
+								<span class="input input--nao" style="margin-bottom: 0;">
+									<input id="r_password" name="r_password" class="input__field input__field--nao" type="password"/>
+									<label class="input__label input__label--nao">
+										<span class="input__label-content input__label-content--nao">Password</span>
+									</label>
+									<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+										<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+									</svg>
+								</span>
+								<label id="r_password-error" class="form-error" for="r_password"></label>
+								
+								<input id="signUpNext1" type="button" value="Next" class="dk-btn btn-wide btn-primary" style="margin-top: 10px;"/>
+								
+								
+								<div class="text warning"><b>İleri</b>'yi seçtiğinizde, <a href="#">Kardo Hizmet Sözleşmesi</a>'ni ve <a href="#">gizlilik ve tanımlama bilgileri bildirimini</a> kabul etmiş olursunuz.</div>
+							</div>
+							<div class="register-steps passive" id="signUpStep2">
+								<div class="header">Ayrıntıları Ekle</div>
+								<div class="text" style="margin-bottom: 0;">Hesap kurulumunuzu tamamlamak için biraz daha bilgiye ihtiyacımız var.</div>
+								
+								<span class="input input--nao" style="margin-bottom: 0;">
+									<input id="r_rname" name="r_rname" class="input__field input__field--nao" type="text"/>
+									<label class="input__label input__label--nao">
+										<span class="input__label-content input__label-content--nao">Name</span>
+									</label>
+									<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+										<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+									</svg>
+								</span>
+								<label id="r_rname-error" class="form-error" for="r_rname"></label>
+
+								<span class="input input--nao" style="margin-bottom: 0;">
+									<input id="r_surname" name="r_surname" class="input__field input__field--nao" type="text"/>
+									<label class="input__label input__label--nao">
+										<span class="input__label-content input__label-content--nao">Surname</span>
+									</label>
+									<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+										<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+									</svg>
+								</span>
+								<label id="r_surname-error" class="form-error" for="r_surname"></label>
+
+								<div class="row"  style="margin-top: 10px;">
+									<div class="col-6" style="padding-right:5px"><input id="signUpBack2" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
+									<div class="col-6" style="padding-left:5px"><input id="signUpNext2" type="button" value="Next" class="dk-btn btn-wide btn-primary" /></div>
+								</div>
+							</div>
+							<div class="register-steps passive" id="signUpStepSubmit">
+								<div class="header">Ayrıntıları Ekle</div>
+								<div class="text">Hesap kurulumunuzu tamamlamak için biraz daha bilgiye ihtiyacımız var.</div>
+								<label style="display:inline-block; margin-bottom: 10px; font-size:14px; font-weight:bold">Doğum Tarihiniz</label>
+								<!--<div class="row">
+									<div class="col-12">
+										<input type="date" id="r_birth_date">
+										<label id="r_birth_date-error" class="form-error" for="r_birth_date"></label>
+									</div>
+								</div>-->
+								<div class="row">
+									<div class="col-4" style="padding-right: 5px;">
+										<select name="r_day" id="r_day" style="margin-bottom: 0;">
+											<!--<option value="1">1</option>-->
+										</select>
+									</div>
+									<div class="col-4" style="padding-right: 5px; padding-left: 5px;">
+										<select name="r_month" id="r_month" style="margin-bottom: 0;">
+											<!--<option value="1">1</option>-->
+										</select>
+									</div>
+									<div class="col-4" style="padding-left: 5px;">
+										<select name="r_year" id="r_year" style="margin-bottom: 0;">
+											<!--<option value="1">1</option>-->
+										</select>
+									</div>
+								</div>
+								<label id="r_date-error" class="form_error"></label>
+
+								<div class="row"  style="margin-top: 10px;">
+									<div class="col-6" style="padding-right:5px"><input id="signUpBack3" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
+									<div class="col-6" style="padding-left:5px"><input id="signUpNext3" type="submit" value="Register" class="dk-btn btn-wide btn-primary" /></div>
+								</div>
+							</div>
+							<div class="register-steps passive" id="signUpStepResult">
+								<div class="row">
+									<div class="col-12">
+										<div class="out-of-middle">
+											<div class="middle">
+												<div class="txt-align-c">
+													<div class="header">Registration is completed successfully!</div>
+													<img src="img/systemPics/checkIcon2.gif" alt="checkIcon" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-12">
+										<a href="#" class="dk-btn btn-wide btn-primary">Giriş Yap</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer class="sm-fix-footer">
+		<ul>
+			<li>©2018 Kardo</li>
+			<li>©2018 Kardo2</li>
+			<li><a href="#">©2018 Kardo3</a></li>
+		</ul>
+	</footer>
+	
+	<script type="text/javascript" src="assets/jquery/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="assets/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="assets/dk-style2019/js/dk-style.js"></script>
+	<script type="text/javascript" src="js/members.js"></script>
+</body>
+</html>
