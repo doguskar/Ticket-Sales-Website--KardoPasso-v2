@@ -11,22 +11,9 @@ using Kardo2020.Models;
 
 namespace Kardo20.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ISession _session;
-        private readonly SessionModel Sessions;
-        private readonly CookieModel Cookies;
-
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
-        {
-            _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
-            _session = _httpContextAccessor.HttpContext.Session;
-            Sessions = new SessionModel(_session);
-            Cookies = new CookieModel(_httpContextAccessor);
-        }
+        public HomeController(IHttpContextAccessor httpContextAccessor): base(httpContextAccessor){}
 
         public IActionResult Index()
         {

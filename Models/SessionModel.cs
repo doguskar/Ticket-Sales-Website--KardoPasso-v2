@@ -8,7 +8,11 @@ namespace Kardo2020.Models
     {
         private readonly ISession _session;
         
-        
+        public bool _Session
+        {
+            get => Get<bool>("_Session");
+            set => Set("_Session", value);
+        }
         public string UserUID
         {
             get => Get<string>("UserUID");

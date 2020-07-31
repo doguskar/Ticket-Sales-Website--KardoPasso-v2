@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Kardo20.Models;
 using Kardo20.Models.DB;
@@ -12,19 +14,16 @@ using Newtonsoft.Json;
 
 namespace Kardo20.Controllers
 {
-    public class MembersController : Controller
+    public class MembersController : BaseController
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ISession _session;
-        private readonly SessionModel Sessions;
-        private readonly CookieModel Cookies;
 
-        public MembersController(IHttpContextAccessor httpContextAccessor)
+        public MembersController(IHttpContextAccessor httpContextAccessor): base(httpContextAccessor)
         {
-            _httpContextAccessor = httpContextAccessor;
-            _session = _httpContextAccessor.HttpContext.Session;
-            Sessions = new SessionModel(_session);
-            Cookies = new CookieModel(_httpContextAccessor);
+            if (!Sessions._Session)
+            {
+                Sessions._Session = true;
+                checkCookies();
+            }
         }
 
         public IActionResult Index()
@@ -95,9 +94,31 @@ namespace Kardo20.Controllers
             }
             return theUser;
         }
+        public Users GetUserFromUUID(string UUID)
+        {
+            Users theUser;
+            using (var ctx = new kardoContext())
+            {
+                theUser = ctx.Users.Where(e => e.Uuid.ToString() == UUID).FirstOrDefault();
+            }
+            return theUser;
+        }
         private bool IsCorrectPassword(string recivedPassword, string validPassword)
         {
-            return recivedPassword == validPassword;
+            string hashedMd5 = "", hashedSha256 = "";
+            using (var sha256 = SHA256.Create())
+            {
+                var result = sha256.ComputeHash(Encoding.ASCII.GetBytes(recivedPassword));
+                hashedSha256 = Convert.ToBase64String(result);
+            }
+            using (var md5 = MD5.Create())
+            {
+                var result = md5.ComputeHash(Encoding.ASCII.GetBytes(hashedSha256));
+                //hashedMd5 = Encoding.ASCII.GetString(result);
+                //hashedMd5 = BitConverter.ToString(result).Replace("-","");
+                hashedMd5 = Convert.ToBase64String(result);
+            }
+            return hashedMd5 == validPassword;
         }
         private int GetLastLoginAttempts(int userId)
         {
@@ -141,6 +162,37 @@ namespace Kardo20.Controllers
 
             loginCookies.Add(loginCookie);
             Cookies.LoginCookies = loginCookies;
+        }
+
+        public IActionResult SignIn([FromQuery]string return_path)
+        {
+            // If there is an account in cookies, it will check from this controller's constructure and this method will redirect previous path
+            if (return_path == null)
+                return View("/");
+
+            return Redirect(return_path);
+        }
+        private void checkCookies()
+        {
+            List<LoginCookie> loginCookies = Cookies.LoginCookies;
+            if (loginCookies != null)
+            {
+                foreach (LoginCookie item in loginCookies)
+                {
+                    if (item.Active)
+                    {
+                        signInFromCookies(item);
+                    }
+                }
+            }
+        }
+        private void signInFromCookies(LoginCookie loginCookie)
+        {
+            LoginRequest loginRequest = new LoginRequest();
+            Users theUser= GetUserFromUUID(loginCookie.UserUID);
+            loginRequest.LoginKey = theUser.Username;
+            loginRequest.DoNotControlPassword = true;
+            string loginReply = Login(loginRequest);
         }
     }
 }
