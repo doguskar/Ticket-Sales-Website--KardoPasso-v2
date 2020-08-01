@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Kardo20.Models.DB
@@ -21,7 +20,6 @@ namespace Kardo20.Models.DB
         public virtual DbSet<Passwords> Passwords { get; set; }
         public virtual DbSet<Permisions> Permisions { get; set; }
         public virtual DbSet<PhoneNumbers> PhoneNumbers { get; set; }
-        public virtual DbSet<Profils> Profils { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -30,10 +28,7 @@ namespace Kardo20.Models.DB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder
-                    .UseLazyLoadingProxies()
-                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning))
-                    .UseSqlServer("Server=.;Database=kardo;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server=.;Database=kardoNew;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -119,9 +114,9 @@ namespace Kardo20.Models.DB
                     .HasColumnName("email")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.NonUsed).HasColumnName("nonUsed");
-
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.Valid).HasColumnName("valid");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Emails)
@@ -143,8 +138,6 @@ namespace Kardo20.Models.DB
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.NonUsed).HasColumnName("nonUsed");
-
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnName("password")
@@ -152,6 +145,8 @@ namespace Kardo20.Models.DB
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.Valid).HasColumnName("valid");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Passwords)
@@ -211,8 +206,6 @@ namespace Kardo20.Models.DB
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.NonUsed).HasColumnName("nonUsed");
-
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired()
                     .HasColumnName("phoneNumber")
@@ -221,48 +214,12 @@ namespace Kardo20.Models.DB
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
+                entity.Property(e => e.Valid).HasColumnName("valid");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.PhoneNumbers)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_phoneNumbers_users");
-            });
-
-            modelBuilder.Entity<Profils>(entity =>
-            {
-                entity.HasKey(e => e.UserId);
-
-                entity.ToTable("profils");
-
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.BornDate)
-                    .HasColumnName("bornDate")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.LanguagePreference)
-                    .HasColumnName("languagePreference")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.ProfilPic)
-                    .HasColumnName("profilPic")
-                    .HasColumnType("ntext");
-
-                entity.Property(e => e.Surname)
-                    .HasColumnName("surname")
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.User)
-                    .WithOne(p => p.Profils)
-                    .HasForeignKey<Profils>(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_profils_users");
             });
 
             modelBuilder.Entity<Roles>(entity =>
@@ -288,6 +245,10 @@ namespace Kardo20.Models.DB
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
+                entity.Property(e => e.BornDate)
+                    .HasColumnName("bornDate")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.CreatedDate)
                     .HasColumnName("createdDate")
                     .HasColumnType("datetime")
@@ -300,6 +261,13 @@ namespace Kardo20.Models.DB
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.DeletedFlag).HasColumnName("deletedFlag");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.EmailActivated).HasColumnName("emailActivated");
 
                 entity.Property(e => e.ForgottenDate)
                     .HasColumnName("forgottenDate")
@@ -316,21 +284,43 @@ namespace Kardo20.Models.DB
                     .HasColumnName("lastModifiedDate")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasColumnName("phoneNumber")
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.PhoneNumberActivated).HasColumnName("phoneNumberActivated");
+
                 entity.Property(e => e.Pin)
                     .HasColumnName("pin")
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.PinActive).HasColumnName("pinActive");
+
                 entity.Property(e => e.PinLastModifiedDate)
                     .HasColumnName("pinLastModifiedDate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.PrimaryEmail)
-                    .IsRequired()
-                    .HasColumnName("primaryEMail")
-                    .HasMaxLength(255);
+                entity.Property(e => e.ProfilPic)
+                    .HasColumnName("profilPic")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RoleId).HasColumnName("roleId");
+
+                entity.Property(e => e.Surname)
+                    .HasColumnName("surname")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Username)
                     .IsRequired()
@@ -341,12 +331,6 @@ namespace Kardo20.Models.DB
                 entity.Property(e => e.Uuid)
                     .HasColumnName("UUID")
                     .HasDefaultValueSql("(newsequentialid())");
-
-                entity.Property(e => e.ValidPassword)
-                    .IsRequired()
-                    .HasColumnName("validPassword")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
 
                 entity.HasOne(d => d.DeletedBy)
                     .WithMany(p => p.InverseDeletedBy)

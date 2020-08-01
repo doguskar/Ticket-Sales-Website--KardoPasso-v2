@@ -9,7 +9,7 @@ namespace Kardo20.Models.DB
         public string Password { get; set; }
         public DateTime CreatedDate { get; set; }
         public int UserId { get; set; }
-        public bool NonUsed { get; set; }
+        public bool Valid { get; set; }
 
         public virtual Users User { get; set; }
     }

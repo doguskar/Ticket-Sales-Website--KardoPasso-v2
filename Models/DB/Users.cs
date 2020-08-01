@@ -16,13 +16,21 @@ namespace Kardo20.Models.DB
         }
 
         public int UserId { get; set; }
-        public string Username { get; set; }
         public Guid Uuid { get; set; }
-        public string ValidPassword { get; set; }
-        public string PrimaryEmail { get; set; }
-        public string Pin { get; set; }
-        public DateTime? PinLastModifiedDate { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public bool EmailActivated { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool? PhoneNumberActivated { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime? BornDate { get; set; }
+        public string ProfilPic { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string Pin { get; set; }
+        public bool? PinActive { get; set; }
+        public DateTime? PinLastModifiedDate { get; set; }
         public string ForgottenKey { get; set; }
         public DateTime? ForgottenDate { get; set; }
         public int? LastModifiedById { get; set; }
@@ -35,7 +43,6 @@ namespace Kardo20.Models.DB
         public virtual Users DeletedBy { get; set; }
         public virtual Users LastModifiedBy { get; set; }
         public virtual Roles Role { get; set; }
-        public virtual Profils Profils { get; set; }
         public virtual ICollection<Authentications> Authentications { get; set; }
         public virtual ICollection<Emails> Emails { get; set; }
         public virtual ICollection<Users> InverseDeletedBy { get; set; }

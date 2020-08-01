@@ -57,7 +57,7 @@ namespace Kardo20.Controllers
                 }
 
                 //DoNotControlPassword to change the user to other user that already login
-                if (loginRequest.DoNotControlPassword || IsCorrectPassword(loginRequest.Password, theUser.ValidPassword))
+                if (loginRequest.DoNotControlPassword || IsCorrectPassword(loginRequest.Password, theUser.Password))
                 {
                     reply.result = true;
                     AddUserToSessions(theUser);
@@ -100,7 +100,7 @@ namespace Kardo20.Controllers
                 lc.Password = false;
                 Cookies.LoginCookies = loginCookies;
             }
-            Sessions.Remove("UserUID");
+            Sessions.Remove("UserInfo");
             return true;
         }
 
@@ -109,7 +109,7 @@ namespace Kardo20.Controllers
             Users theUser;
             using (var ctx = new kardoContext())
             {
-                theUser = ctx.Users.Include(x => x.Profils).Where(e => e.Username == LoginKey || e.PrimaryEmail == LoginKey).FirstOrDefault();
+                theUser = ctx.Users.Where(e => e.Username == LoginKey || e.Email == LoginKey).FirstOrDefault();
             }
             return theUser;
         }
@@ -152,8 +152,8 @@ namespace Kardo20.Controllers
             UserInfo userInfo = new UserInfo();
             userInfo.UserUID = theUser.Uuid.ToString();
             userInfo.Username = theUser.Username;
-            userInfo.UserRName = theUser.Profils.Name + " " + theUser.Profils.Surname;
-            userInfo.ProfilPic = theUser.Profils.ProfilPic;
+            userInfo.UserRName = theUser.Name + " " + theUser.Surname;
+            userInfo.ProfilPic = theUser.ProfilPic;
             Sessions.UserInfo = userInfo;
         }
         private void AddUserToCookies(Users theUser, LoginRequest loginRequest)
@@ -214,17 +214,24 @@ namespace Kardo20.Controllers
         {
             LoginRequest loginRequest = new LoginRequest();
             Users theUser= GetUserFromUUID(loginCookie.UserUID);
-            loginRequest.LoginKey = theUser.Username;
-            loginRequest.DoNotControlPassword = true;
-            string loginReply = Login(loginRequest);
+            if (theUser != null)
+            {
+                loginRequest.LoginKey = theUser.Username;
+                loginRequest.DoNotControlPassword = true;
+                string loginReply = Login(loginRequest);
+            }
+            else
+            {
+                Cookies.Delete("LoginCookies");
+
+            }
         }
         [HttpPost]
         public string GetSavedAccounts()
         {
             List<LoginCookie> loginCookies  = Cookies.LoginCookies;
-            if (loginCookies == null || loginCookies.Count <= 1 || string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
-                return "";
-            
+            if (loginCookies == null || loginCookies.Count <= 1 || Sessions.UserInfo == null  || string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
+                return "[]";
             List<string> userUUIDs = new List<string>();
             foreach (var item in loginCookies)
                 if (Sessions.UserInfo.UserUID != item.UserUID)
@@ -233,14 +240,14 @@ namespace Kardo20.Controllers
             List<UserInfo> savedAccounts = new List<UserInfo>();
             using (var ctx = new kardoContext())
             {
-                var accountList = ctx.Users.Include(x => x.Profils).Where(e => userUUIDs.Contains(e.Uuid.ToString()));
+                var accountList = ctx.Users.Where(e => userUUIDs.Contains(e.Uuid.ToString()));
                 foreach (var item in accountList)
                 {
                     UserInfo user = new UserInfo();
                     user.Username = item.Username;
                     user.UserUID = item.Uuid.ToString();
-                    user.UserRName = item.Profils.Name + " " + item.Profils.Surname;
-                    user.ProfilPic = item.Profils.ProfilPic;
+                    user.UserRName = item.Name + " " + item.Surname;
+                    user.ProfilPic = item.ProfilPic;
                     savedAccounts.Add(user);
                 }
             }

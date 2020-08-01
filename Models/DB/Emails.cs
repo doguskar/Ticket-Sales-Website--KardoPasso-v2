@@ -12,7 +12,7 @@ namespace Kardo20.Models.DB
         public bool Activated { get; set; }
         public DateTime? ActivatedDate { get; set; }
         public int UserId { get; set; }
-        public bool NonUsed { get; set; }
+        public bool Valid { get; set; }
 
         public virtual Users User { get; set; }
     }

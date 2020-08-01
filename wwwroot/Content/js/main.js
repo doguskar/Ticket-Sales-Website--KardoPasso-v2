@@ -21,9 +21,9 @@ $(document).ready(function () {
             for (var item of savedAcconts) {
                 otherAccountsBody +=    '<div class="accounts-item">';
                 otherAccountsBody +=         '<a href = "javascript:;" >';
-                otherAccountsBody +=           '<img src="/Content/img/userProfilPics/' + item.ProfilPic + '" alt="'+ item.ProfilPic +'" />';
-                otherAccountsBody +=           '<div class="user-rname">' + item.UserRName + '</div>';
-                otherAccountsBody +=          '<div class="username">@' + item.Username + '</div>';
+                otherAccountsBody +=            '<img src="/Content/img/userProfilPics/' + item.ProfilPic + '" alt="'+ item.ProfilPic +'" />';
+                otherAccountsBody +=            '<div class="user-rname">' + item.UserRName + '</div>';
+                otherAccountsBody +=            '<div class="username">@' + item.Username + '</div>';
                 otherAccountsBody +=        '</a>';
                 otherAccountsBody +=     '</div>';
             }
