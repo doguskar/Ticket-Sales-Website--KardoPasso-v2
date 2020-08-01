@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Kardo20.Models;
 
 namespace Kardo2020.Models
 {
@@ -13,16 +14,17 @@ namespace Kardo2020.Models
             get => Get<bool>("_Session");
             set => Set("_Session", value);
         }
-        public string UserUID
+        public UserInfo UserInfo
         {
-            get => Get<string>("UserUID");
-            set => Set("UserUID", value);
+            get => Get<UserInfo>("UserInfo");
+            set => Set("UserInfo", value);
         }
         public int LoginAttempts
         {
             get => Get<int>("LoginAttempts");
             set => Set("LoginAttempts", value);
         }
+
 
 
 

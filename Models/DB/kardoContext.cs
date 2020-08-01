@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Kardo20.Models.DB
@@ -29,7 +30,10 @@ namespace Kardo20.Models.DB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=kardo;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning))
+                    .UseSqlServer("Server=.;Database=kardo;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 

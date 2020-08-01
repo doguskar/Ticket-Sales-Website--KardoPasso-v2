@@ -32,9 +32,17 @@ namespace Kardo20.Controllers
             {
                 Response.Redirect("/Members/SignIn?return_path=" + Request.Path);
             }
-            if (!string.IsNullOrEmpty(Sessions.UserUID))
+
+            if (Sessions.UserInfo != null)
             {
-                ViewData["Session_UserUID"] = Sessions.UserUID;
+                UserInfo userInfo = Sessions.UserInfo;
+                ViewData["Sessions_UserUID"] = userInfo.UserUID;
+                ViewData["Sessions_UserRName"] = userInfo.UserRName;
+                ViewData["Sessions_Username"] = userInfo.Username;
+                if (string.IsNullOrEmpty(userInfo.ProfilPic))
+                    ViewData["Sessions_UserProfilPic"] = "profil_pic.png";
+                else
+                    ViewData["Sessions_UserProfilPic"] = userInfo.ProfilPic;
             }
         }
     }

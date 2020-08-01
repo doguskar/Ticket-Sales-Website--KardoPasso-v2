@@ -1,0 +1,42 @@
+﻿<nav id="dk-nav" class="dk-nav">
+    <div class="dk-nav-header">
+        <a href="#">
+            <img src="~/Content/img/systemPics/kardo.png" alt="Kardo" />
+            <span class="header-sub"></span>
+        </a>
+        <span class="dk-nav-header-btn"><i class="fa fa-chevron-left"></i></span>
+    </div>
+    <div class="dk-nav-sec">
+        @if (String.IsNullOrEmpty((string)ViewData["Sessions_UserUID"]))
+        {
+            <a href="/Members/Login" class="dk-btn sharp-btn">Login</a>
+        }
+        else
+        {
+            <a href="javascript:;" class="dk-nav-user">
+                <img src="~/Content/img/userProfilPics/@ViewData["Sessions_UserProfilPic"]" alt="" />
+                <span>@ViewData["Sessions_UserRName"]</span>
+            </a>
+        }
+    </div>
+    <ul>
+        <li><a href="/"><i class="fa fa-home"></i><span>HomePage</span></a></li>
+        <li>
+            <a href="javascript:;"><i class="fa fa-home"></i><span>Nested Links</span></a>
+            <ul>
+                <li><a href="#">sub link</a></li>
+                <li><a href="#">sub link</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-home"></i><span>HomePage</span></a></li>
+    </ul>
+    <div class="dk-nav-sec">
+        <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-twitter"></i></a>
+        <a href="javascript:;" class="dk-btn round-btn"><i class="fab fa-twitch"></i></a>
+    </div>
+    <div class="dk-nav-footer">
+        <a href="#"><img src="~/Content/img/systemPics/kardo.png" alt="Kardo" /></a>
+        <div>Copyright © 2019</div>
+    </div>
+</nav>

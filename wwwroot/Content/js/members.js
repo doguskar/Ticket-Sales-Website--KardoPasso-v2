@@ -24,7 +24,7 @@ if (document.getElementById("loginForm"))
                         if (loginReply.redirectAddress) {
                             window.location.href = loginReply.redirectAddress;
                         } else {
-                            window.location.href = "http://localhost:8080";
+                            window.location.href = "http://localhost:8081";
                         }
                     } else {
                         //Failed Login
@@ -192,7 +192,8 @@ if(document.getElementById("signUpForm"))
             })
 
             removeLoading();
-        }else{
+        } else {
+            e.preventDefault();
             signUpNextStep();
         }
     });

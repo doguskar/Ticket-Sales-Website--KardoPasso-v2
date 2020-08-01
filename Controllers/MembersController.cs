@@ -85,12 +85,31 @@ namespace Kardo20.Controllers
             return JsonConvert.SerializeObject(reply);
         }
 
+        [HttpPost]
+        public bool Logout()
+        {
+            if (string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
+                return false;
+
+            //If the user select keep me sign in when it sign in, remove it
+            List<LoginCookie> loginCookies = Cookies.LoginCookies;
+            LoginCookie lc = loginCookies.Find(x => x.UserUID == Sessions.UserInfo.UserUID);
+            if (lc.Active)
+            {
+                lc.Active = false;
+                lc.Password = false;
+                Cookies.LoginCookies = loginCookies;
+            }
+            Sessions.Remove("UserUID");
+            return true;
+        }
+
         private Users GetUserFromLoginKey(string LoginKey)
         {
             Users theUser;
             using (var ctx = new kardoContext())
             {
-                theUser = ctx.Users.Where(e => e.Username == LoginKey || e.PrimaryEmail == LoginKey).FirstOrDefault();
+                theUser = ctx.Users.Include(x => x.Profils).Where(e => e.Username == LoginKey || e.PrimaryEmail == LoginKey).FirstOrDefault();
             }
             return theUser;
         }
@@ -130,7 +149,12 @@ namespace Kardo20.Controllers
         }
         private void AddUserToSessions(Users theUser)
         {
-            Sessions.UserUID = theUser.Uuid.ToString();
+            UserInfo userInfo = new UserInfo();
+            userInfo.UserUID = theUser.Uuid.ToString();
+            userInfo.Username = theUser.Username;
+            userInfo.UserRName = theUser.Profils.Name + " " + theUser.Profils.Surname;
+            userInfo.ProfilPic = theUser.Profils.ProfilPic;
+            Sessions.UserInfo = userInfo;
         }
         private void AddUserToCookies(Users theUser, LoginRequest loginRequest)
         {
@@ -193,6 +217,35 @@ namespace Kardo20.Controllers
             loginRequest.LoginKey = theUser.Username;
             loginRequest.DoNotControlPassword = true;
             string loginReply = Login(loginRequest);
+        }
+        [HttpPost]
+        public string GetSavedAccounts()
+        {
+            List<LoginCookie> loginCookies  = Cookies.LoginCookies;
+            if (loginCookies == null || loginCookies.Count <= 1 || string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
+                return "";
+            
+            List<string> userUUIDs = new List<string>();
+            foreach (var item in loginCookies)
+                if (Sessions.UserInfo.UserUID != item.UserUID)
+                    userUUIDs.Add(item.UserUID);
+
+            List<UserInfo> savedAccounts = new List<UserInfo>();
+            using (var ctx = new kardoContext())
+            {
+                var accountList = ctx.Users.Include(x => x.Profils).Where(e => userUUIDs.Contains(e.Uuid.ToString()));
+                foreach (var item in accountList)
+                {
+                    UserInfo user = new UserInfo();
+                    user.Username = item.Username;
+                    user.UserUID = item.Uuid.ToString();
+                    user.UserRName = item.Profils.Name + " " + item.Profils.Surname;
+                    user.ProfilPic = item.Profils.ProfilPic;
+                    savedAccounts.Add(user);
+                }
+            }
+
+            return JsonConvert.SerializeObject(savedAccounts);
         }
     }
 }
