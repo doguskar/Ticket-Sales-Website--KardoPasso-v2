@@ -254,5 +254,19 @@ namespace Kardo20.Controllers
 
             return JsonConvert.SerializeObject(savedAccounts);
         }
+        [HttpPost]
+        public string LoginFromWidget()
+        {
+            string uuid = Request.Form["uuid"];
+            LoginRequest loginRequest = new LoginRequest();
+            Users theUser = GetUserFromUUID(uuid);
+            if (theUser != null)
+            {
+                loginRequest.LoginKey = theUser.Username;
+                loginRequest.DoNotControlPassword = true;
+                return Login(loginRequest);
+            }
+            return "{}";
+        }
     }
 }
