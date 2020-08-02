@@ -13,25 +13,32 @@
 
 // Saved accounts list
 $(document).ready(function () {
+    if (!$('#savedAccounts').is(':empty')) {
+        return
+    }
+
     $.ajax({
         type: "POST",
         url: "/Members/GetSavedAccounts",
         success: function (json) {
             var savedAcconts = JSON.parse(json);
-            var otherAccountsBody = "";
+            var savedAccountsBody = "";
             for (var item of savedAcconts) {
-                otherAccountsBody +=    '<div id="asd" class="accounts-item" data-uuid=' + item.UserUID + '>';
-                otherAccountsBody +=        '<a href = "javascript:;" >';
+                savedAccountsBody +=    '<div class="accounts-item" data-uuid=' + item.UserUID + '>';
+                savedAccountsBody +=        '<a href = "javascript:;" >';
                 if (item.ProfilPic)
-                    otherAccountsBody +=        '<img src="/Content/img/userProfilPics/' + item.ProfilPic + '" alt="'+ item.ProfilPic +'" />';
+                    savedAccountsBody +=        '<img src="/Content/img/userProfilPics/' + item.ProfilPic + '" alt="'+ item.ProfilPic +'" />';
                 else
-                    otherAccountsBody +=        '<img src="/Content/img/userProfilPics/profil_pic.png" />';
-                otherAccountsBody +=            '<div class="user-rname">' + item.UserRName + '</div>';
-                otherAccountsBody +=            '<div class="username">@' + item.Username + '</div>';
-                otherAccountsBody +=        '</a>';
-                otherAccountsBody +=     '</div>';
+                    savedAccountsBody +=        '<img src="/Content/img/userProfilPics/profil_pic.png" />';
+                savedAccountsBody +=            '<div class="user-rname">' + item.UserRName + '</div>';
+                savedAccountsBody +=            '<div class="username">@' + item.Username + '</div>';
+                savedAccountsBody +=        '</a>';
+                savedAccountsBody +=     '</div>';
             }
-            $('#otherAccounts').html(otherAccountsBody)
+            $('#savedAccounts').html(savedAccountsBody)
+            if (window.location.pathname == "/Members/Login") {
+                $('#savedAccountsHeader').css("display", "block")
+            }
 
             //When clicked to change account
             $('.accounts-item').click(function () {
@@ -45,7 +52,16 @@ $(document).ready(function () {
                         success: function (json) {
                             var loginReply = JSON.parse(json);
                             if (loginReply.result) {
-                                location.reload()
+                                if (window.location.pathname == "/Members/Login") {
+                                    //If in login page
+                                    if (loginReply.redirectAddress) {
+                                        window.location.href = loginReply.redirectAddress;
+                                    } else {
+                                        window.location.href = "http://" + location.hostname + ":" + location.port;
+                                    }
+                                } else {
+                                    location.reload()
+                                }
                             }
                         },
                         error: function () {

@@ -230,12 +230,21 @@ namespace Kardo20.Controllers
         public string GetSavedAccounts()
         {
             List<LoginCookie> loginCookies  = Cookies.LoginCookies;
-            if (loginCookies == null || loginCookies.Count <= 1 || Sessions.UserInfo == null  || string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
+            if (loginCookies == null || loginCookies.Count < 1)
                 return "[]";
+
             List<string> userUUIDs = new List<string>();
-            foreach (var item in loginCookies)
-                if (Sessions.UserInfo.UserUID != item.UserUID)
+            if (Sessions.UserInfo != null && !string.IsNullOrEmpty(Sessions.UserInfo.UserUID))
+            {
+                foreach (var item in loginCookies)
+                    if (Sessions.UserInfo.UserUID != item.UserUID)
+                        userUUIDs.Add(item.UserUID);
+            }
+            else
+            {
+                foreach (var item in loginCookies)
                     userUUIDs.Add(item.UserUID);
+            }
 
             List<UserInfo> savedAccounts = new List<UserInfo>();
             using (var ctx = new kardoContext())
@@ -266,7 +275,7 @@ namespace Kardo20.Controllers
                 loginRequest.DoNotControlPassword = true;
                 return Login(loginRequest);
             }
-            return "{}";
+            return JsonConvert.SerializeObject(new LoginReply());//result -> false
         }
     }
 }

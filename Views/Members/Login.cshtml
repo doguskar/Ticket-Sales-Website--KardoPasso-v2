@@ -41,16 +41,8 @@
                     <label id="LoginKey-error" class="form-error" for="LoginKey"></label>
 
                     <input id="loginNextBtn" type="button" value="Next" class="dk-btn btn-wide btn-primary" style="margin-top: 10px;" />
-                    <div class="header">Saved Accounts</div>
-                    <div class="other-accounts">
-                        <div class="accounts-item">
-                            <a href="#">
-                                <img src="~/Content/img/systemPics/kardo-icon.png" />
-                                <div class="user-rname">Kardo</div>
-                                <div class="username">&#40Kardo</div>
-                            </a>
-                        </div>
-                    </div>
+                    <div class="header" id="savedAccountsHeader" style="display:none">Saved Accounts</div>
+                    <div id="savedAccounts" class="other-accounts"></div>
                 </div>
                 <div class="login-steps passive" id="signInStepPassword">
                     <div class="header">Log In</div>
@@ -95,6 +87,7 @@
 
 @section Scripts{
     <script type="text/javascript" src="~/Content/assets/jquery/jquery-3.4.1.min.js"></script>
-    <partial name="Partials/_ValidationScriptsPartial"/>
+    <partial name="Partials/_ValidationScriptsPartial" />
+    <script type="text/javascript" src="~/Content/js/main.js"></script>
     <script type="text/javascript" src="~/Content/js/members.js"></script>
 }

@@ -24,7 +24,7 @@ if (document.getElementById("loginForm"))
                         if (loginReply.redirectAddress) {
                             window.location.href = loginReply.redirectAddress;
                         } else {
-                            window.location.href = "http://localhost:8081";
+                            window.location.href = "http://" + location.hostname + ":" + location.port;
                         }
                     } else {
                         //Failed Login
@@ -43,7 +43,6 @@ if (document.getElementById("loginForm"))
         }
     });
 if (document.getElementById("loginNextBtn")) {
-    debugger
     document.getElementById("loginNextBtn").addEventListener("click", () => showLoginStep2());
 }
 if(document.getElementById("loginBackBtn"))
@@ -75,14 +74,6 @@ function showWarn(str) {
 }
 function clearWarnings() {
     document.getElementById("dk-signin-box").querySelector(".warnings").innerHTML = "";
-}
-if(document.getElementById("dk-signin-box").querySelector(".other-accounts")){
-    var otherAccounts = document.getElementById("dk-signin-box").querySelector(".other-accounts").querySelectorAll(".accounts-item");
-    otherAccounts.forEach(e => {
-        e.addEventListener("click", function(){
-            alert(e.getAttribute("data-userUID"));
-        })
-    });
 }
 
 $("#loginForm").validate({
