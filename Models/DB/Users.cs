@@ -13,6 +13,7 @@ namespace Kardo20.Models.DB
             InverseLastModifiedBy = new HashSet<Users>();
             Passwords = new HashSet<Passwords>();
             PhoneNumbers = new HashSet<PhoneNumbers>();
+            Sessions = new HashSet<Sessions>();
         }
 
         public int UserId { get; set; }
@@ -49,5 +50,6 @@ namespace Kardo20.Models.DB
         public virtual ICollection<Users> InverseLastModifiedBy { get; set; }
         public virtual ICollection<Passwords> Passwords { get; set; }
         public virtual ICollection<PhoneNumbers> PhoneNumbers { get; set; }
+        public virtual ICollection<Sessions> Sessions { get; set; }
     }
 }

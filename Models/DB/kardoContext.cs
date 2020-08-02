@@ -21,6 +21,7 @@ namespace Kardo20.Models.DB
         public virtual DbSet<Permisions> Permisions { get; set; }
         public virtual DbSet<PhoneNumbers> PhoneNumbers { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Sessions> Sessions { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,7 +29,7 @@ namespace Kardo20.Models.DB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=kardoNew;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server=.;Database=kardo;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -237,11 +238,50 @@ namespace Kardo20.Models.DB
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Sessions>(entity =>
+            {
+                entity.HasKey(e => e.Suid)
+                    .HasName("PK_sessions_1");
+
+                entity.ToTable("sessions");
+
+                entity.HasIndex(e => e.Suid)
+                    .HasName("suid")
+                    .IsUnique();
+
+                entity.Property(e => e.Suid)
+                    .HasColumnName("suid")
+                    .HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("createdDate")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.Uuid).HasColumnName("uuid");
+
+                entity.Property(e => e.Valid)
+                    .IsRequired()
+                    .HasColumnName("valid")
+                    .HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Uu)
+                    .WithMany(p => p.Sessions)
+                    .HasPrincipalKey(p => p.Uuid)
+                    .HasForeignKey(d => d.Uuid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_users_sessions");
+            });
+
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId);
 
                 entity.ToTable("users");
+
+                entity.HasIndex(e => e.Uuid)
+                    .HasName("uuid")
+                    .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
