@@ -22,7 +22,7 @@ namespace Kardo20.Controllers
             if (!Sessions._Session)
             {
                 Sessions._Session = true;
-                checkCookies();
+                CheckCookies();
             }
         }
 
@@ -93,12 +93,14 @@ namespace Kardo20.Controllers
 
             //If the user select keep me sign in when it sign in, remove it
             List<LoginCookie> loginCookies = Cookies.LoginCookies;
-            LoginCookie lc = loginCookies.Find(x => x.UserUID == Sessions.UserInfo.UserUID);
-            if (lc.Active)
+            if (loginCookies != null)
             {
-                lc.Active = false;
-                lc.Password = false;
-                Cookies.LoginCookies = loginCookies;
+                LoginCookie lc = loginCookies.Find(x => x.UserUID == Sessions.UserInfo.UserUID);
+                if (lc.Active)
+                {
+                    lc.Active = false;
+                    Cookies.LoginCookies = loginCookies;
+                }
             }
             Sessions.Remove("UserInfo");
             return true;
@@ -162,7 +164,19 @@ namespace Kardo20.Controllers
 
             LoginCookie loginCookie = new LoginCookie();
             loginCookie.UserUID = theUser.Uuid.ToString();
-            loginCookie.Password = loginRequest.KeepMeSignIn;
+
+            //If the account is saved befor to cookies, don't create new SessionUID
+            var i = loginCookies.Find(i => i.UserUID == theUser.Uuid.ToString());
+            //If sign in process happens for the first time, create SessionUID for the client
+            //Is the account saved to the cookies? If yes, is the account's session valid?
+            if (!loginRequest.DoNotControlPassword && (i == null || !IsSessionValid(i.UserUID, i.SessionUID)))
+            {
+                loginCookie.SessionUID = CreateSUID(theUser.Uuid).ToString();
+            }
+            else
+            {
+                loginCookie.SessionUID = i.SessionUID;
+            }
             if (loginRequest.KeepMeSignIn)
                 loginCookie.Active = true;
 
@@ -187,6 +201,16 @@ namespace Kardo20.Controllers
             loginCookies.Add(loginCookie);
             Cookies.LoginCookies = loginCookies;
         }
+        private Guid CreateSUID(Guid uuid)
+        {
+            using (var ctx = new kardoContext())
+            {
+                Sessions i = new Sessions { Uuid = uuid };
+                ctx.Sessions.Add(i);
+                ctx.SaveChanges();
+                return i.Suid;
+            }
+        }
 
         public IActionResult SignIn([FromQuery]string return_path)
         {
@@ -196,7 +220,7 @@ namespace Kardo20.Controllers
 
             return Redirect(return_path);
         }
-        private void checkCookies()
+        private void CheckCookies()
         {
             List<LoginCookie> loginCookies = Cookies.LoginCookies;
             if (loginCookies != null)
@@ -205,25 +229,49 @@ namespace Kardo20.Controllers
                 {
                     if (item.Active)
                     {
-                        signInFromCookies(item);
+                        SignInFromCookies(item);
                     }
                 }
             }
         }
-        private void signInFromCookies(LoginCookie loginCookie)
+        private void SignInFromCookies(LoginCookie loginCookie)
         {
-            LoginRequest loginRequest = new LoginRequest();
-            Users theUser= GetUserFromUUID(loginCookie.UserUID);
-            if (theUser != null)
+            if (IsSessionValid(loginCookie.UserUID, loginCookie.SessionUID))
             {
-                loginRequest.LoginKey = theUser.Username;
-                loginRequest.DoNotControlPassword = true;
-                string loginReply = Login(loginRequest);
+                LoginRequest loginRequest = new LoginRequest();
+                Users theUser = GetUserFromUUID(loginCookie.UserUID);
+                //There is a problem if theUser is null then clear cookies. 
+                if (theUser != null)
+                {
+                    loginRequest.LoginKey = theUser.Username;
+                    loginRequest.DoNotControlPassword = true;
+                    string loginReply = Login(loginRequest);
+                }
+                else
+                {
+                    Cookies.Delete("LoginCookies");
+                }
             }
             else
             {
-                Cookies.Delete("LoginCookies");
+                //The session terminated. Remove it from cookeies.
+                RemoveAccountFromCookies(loginCookie);
+            }
 
+        }
+        private bool IsSessionValid(string uuid, string suid)
+        {
+            using (var ctx = new kardoContext())
+            {
+                var session = ctx.Sessions.Where(x => x.Uuid.ToString() == uuid && x.Suid.ToString() == suid && x.Valid == true).FirstOrDefault();
+                if (session == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
         [HttpPost]
@@ -266,16 +314,39 @@ namespace Kardo20.Controllers
         [HttpPost]
         public string LoginFromWidget()
         {
+            LoginReply reply = new LoginReply();
+
             string uuid = Request.Form["uuid"];
-            LoginRequest loginRequest = new LoginRequest();
-            Users theUser = GetUserFromUUID(uuid);
-            if (theUser != null)
+            LoginCookie theLoginCookie = Cookies.LoginCookies.Find(i => i.UserUID == uuid);
+            if (theLoginCookie != null)
             {
-                loginRequest.LoginKey = theUser.Username;
-                loginRequest.DoNotControlPassword = true;
-                return Login(loginRequest);
+                if (IsSessionValid(uuid, theLoginCookie.SessionUID))
+                {
+                    LoginRequest loginRequest = new LoginRequest();
+                    Users theUser = GetUserFromUUID(uuid);
+                    if (theUser != null)
+                    {
+                        loginRequest.LoginKey = theUser.Username;
+                        loginRequest.DoNotControlPassword = true;
+                        loginRequest.RememberMe = true;
+                        loginRequest.KeepMeSignIn = true;
+                        return Login(loginRequest);
+                    }
+                }
+                else
+                {
+                    //The account has saved but it is terminated.
+                    reply.sessionTerminated = true;
+                    RemoveAccountFromCookies(theLoginCookie);
+                }
             }
-            return JsonConvert.SerializeObject(new LoginReply());//result -> false
+            return JsonConvert.SerializeObject(reply);
+        }
+        private void RemoveAccountFromCookies(LoginCookie loginCookie)
+        {
+            List<LoginCookie> loginCookies = Cookies.LoginCookies;
+            loginCookies.Remove(loginCookies.Find(i => i.UserUID == loginCookie.UserUID));
+            Cookies.LoginCookies = loginCookies;
         }
     }
 }

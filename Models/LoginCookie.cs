@@ -8,7 +8,7 @@ namespace Kardo20.Models
     public class LoginCookie
     {
         public string UserUID { get; set; }
-        public bool Password { get; set; }
+        public string SessionUID { get; set; }
         public bool Active { get; set; }
 
     }

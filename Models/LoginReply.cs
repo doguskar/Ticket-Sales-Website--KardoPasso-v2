@@ -12,6 +12,7 @@ namespace Kardo20.Models
         public bool invalidLoginKey { get; set; }
         public bool invalidPassword { get; set; }
         public bool tooManyAttempts { get; set; }
+        public bool sessionTerminated { get; set; }
         public string redirectAddress { get; set; }
     }
 }
