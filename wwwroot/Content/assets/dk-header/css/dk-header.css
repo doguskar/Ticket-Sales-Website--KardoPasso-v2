@@ -154,6 +154,7 @@ nav.dh-h-nav ul > li > ul > li > a:hover{
 header.dk-header .dh-user{
 	float:right;
 	margin:0px 5px;
+	height:55px;
 }
 header.dk-header .dh-user a.dh-log-btn{
 	display:inline-block;

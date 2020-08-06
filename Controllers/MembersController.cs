@@ -19,11 +19,13 @@ namespace Kardo20.Controllers
 
         public MembersController(IHttpContextAccessor httpContextAccessor): base(httpContextAccessor)
         {
+            /*
             if (!Sessions._Session)
             {
                 Sessions._Session = true;
                 CheckCookies();
             }
+            */
         }
 
         public IActionResult Index()
@@ -161,6 +163,8 @@ namespace Kardo20.Controllers
         private void AddUserToCookies(Users theUser, LoginRequest loginRequest)
         {
             List<LoginCookie> loginCookies = Cookies.LoginCookies;
+            if (loginCookies == null)
+                loginCookies = new List<LoginCookie>();
 
             LoginCookie loginCookie = new LoginCookie();
             loginCookie.UserUID = theUser.Uuid.ToString();
@@ -180,8 +184,6 @@ namespace Kardo20.Controllers
             if (loginRequest.KeepMeSignIn)
                 loginCookie.Active = true;
 
-            if (loginCookies == null)
-                loginCookies = new List<LoginCookie>();
 
             LoginCookie currUser = null;
             foreach (var item in loginCookies)
@@ -329,7 +331,11 @@ namespace Kardo20.Controllers
                         loginRequest.LoginKey = theUser.Username;
                         loginRequest.DoNotControlPassword = true;
                         loginRequest.RememberMe = true;
-                        loginRequest.KeepMeSignIn = true;
+                        LoginCookie loginCookieActive = Cookies.LoginCookies.Find(i => i.Active == true);
+                        if (loginCookieActive != null)
+                        {
+                            loginRequest.KeepMeSignIn = true;
+                        }
                         return Login(loginRequest);
                     }
                 }
@@ -347,6 +353,17 @@ namespace Kardo20.Controllers
             List<LoginCookie> loginCookies = Cookies.LoginCookies;
             loginCookies.Remove(loginCookies.Find(i => i.UserUID == loginCookie.UserUID));
             Cookies.LoginCookies = loginCookies;
+        }
+
+        [HttpPost]
+        public string GetSessionsUserInfo()
+        {
+            if (!Sessions._Session)
+            {
+                Sessions._Session = true;
+                CheckCookies();
+            }
+            return JsonConvert.SerializeObject(Sessions.UserInfo);
         }
     }
 }

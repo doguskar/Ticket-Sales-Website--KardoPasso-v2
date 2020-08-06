@@ -6,7 +6,7 @@
 
 @section Head{
     <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-style2019/assets/TextInputEffects/css/set2.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/cssload/cssload-Michael.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/cssload/lds_ripple.css" />
 }
 
 <div class="dk-signin-box" id="dk-signin-box">
@@ -42,7 +42,9 @@
 
                     <input id="loginNextBtn" type="button" value="Next" class="dk-btn btn-wide btn-primary" style="margin-top: 10px;" />
                     <div class="header" id="savedAccountsHeader" style="display:none">Saved Accounts</div>
-                    <div id="savedAccounts" class="other-accounts"></div>
+                    <div id="savedAccounts" class="other-accounts">
+                        <div class="out-of-middle"><div class="middle"><div style="text-align:center"><div class="lds-ripple"><div></div><div></div></div></div></div></div>
+                    </div>
                 </div>
                 <div class="login-steps passive" id="signInStepPassword">
                     <div class="header">Log In</div>
