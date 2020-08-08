@@ -1,82 +1,71 @@
 /* Sign In */
-if (document.getElementById("loginForm"))
-    document.getElementById("loginForm").addEventListener("submit", function formControl(e) {
-        e.preventDefault();
-        if(!$("#loginForm").valid())
-            return;
-        //Pressed enter in username input
-        if(document.getElementById("signInStepUserKey").classList.contains("active")){
-            showLoginStep2();
-        }
-        //Submitted form
-        else if (document.getElementById("signInStepPassword").classList.contains("active")) {
-            //There is an error
-            //showLoading(document.getElementById("dk-signin-box").querySelector(".box-content-sec"));
-            $.ajax({
-                type: "POST",
-                url: "/Members/Login",
-                data: $("#loginForm").serialize(),
-                success: function (json) {
-                    var loginReply = JSON.parse(json);
-                    if (loginReply.result) {
-                        
-                        //Success Login
-                        if (loginReply.redirectAddress) {
-                            window.location.href = loginReply.redirectAddress;
-                        } else {
-                            window.location.href = "http://" + location.hostname + ":" + location.port;
-                        }
-                    } else {
-                        //Failed Login
-                        if (loginReply.invalidLoginKey || loginReply.invalidPassword) {
-                            showLoginStep1();
-                            showWarn("Invalid username or password!");
-                        }
-                    }
-                    //removeLoading();
-                },
-                error: function () {
-                    //removeLoading();
-                }
-            })
-
-        }
-    });
-if (document.getElementById("loginNextBtn")) {
-    document.getElementById("loginNextBtn").addEventListener("click", () => showLoginStep2());
-}
-if(document.getElementById("loginBackBtn"))
-    document.getElementById("loginBackBtn").addEventListener("click", () => showLoginStep1());
+$('#loginNextBtn').click(showLoginStep2)
+$('#loginBackBtn').click(showLoginStep1)
 
 function showLoginStep1() {
-    document.getElementById("signInStepUserKey").classList.remove("passive");
-    document.getElementById("signInStepUserKey").classList.add("active");
-    document.getElementById("signInStepPassword").classList.remove("active");
-    document.getElementById("signInStepPassword").classList.add("passive");
-    document.getElementById("submittedUserKey").classList.remove("active");
-    document.getElementById("submittedUserKey").classList.add("passive");
-    document.getElementById("dk-signin-box").querySelector(".box-footer-sec").innerHTML = '<div>Hesabınız yok mu? <a href="javascript:;" id="register_link">Bir hesap oluştur!</a> </div>';  
+    $('#signInStepUserKey').removeClass('passive').addClass('active')
+    $('#signInStepPassword').removeClass('active').addClass('passive')
+    $('#submittedUserKey').removeClass('active').addClass('passive')
+    $('#LoginKey').focus()
+    footerBody = `<div>Don't you have any account? <a href="javascript:;" id="register_link">Create an account now!</a> </div>`
+    $('#dk-signin-box .box-footer-sec').html(footerBody)
 }
 function showLoginStep2() {
     if(!$("#LoginKey").valid())
         return;
-    document.getElementById("signInStepUserKey").classList.remove("active");
-    document.getElementById("signInStepUserKey").classList.add("passive");
-    document.getElementById("signInStepPassword").classList.remove("passive");
-    document.getElementById("signInStepPassword").classList.add("active");
-    document.getElementById("submittedUserKey").querySelector(".text").innerHTML = document.getElementById("LoginKey").value;
-    document.getElementById("submittedUserKey").classList.remove("passive");
-    document.getElementById("submittedUserKey").classList.add("active");
-    document.getElementById("dk-signin-box").querySelector(".box-footer-sec").innerHTML = '<div>Şifreni mi unuttun? <a href="javascript:;">Şifreni sıfırla!</a> </div>';
-}
-function showWarn(str) {
-    document.getElementById("dk-signin-box").querySelector(".warnings").innerHTML = '<div class="dk-alert bg-danger"><p>' + str + '</p></div>';
-}
-function clearWarnings() {
-    document.getElementById("dk-signin-box").querySelector(".warnings").innerHTML = "";
+        
+    $('#signInStepUserKey').removeClass('active').addClass('passive')
+    $('#signInStepPassword').removeClass('passive').addClass('active')
+    $('#submittedUserKey .text').html($('#LoginKey').val())
+    $('#submittedUserKey').removeClass('passive').addClass('active')
+    $('#Password').focus()
+    footerBody = `Don't you remember your password? <a href="javascript:;">Reset your password!</a> </div>`
+    $('#dk-signin-box .box-footer-sec').html(footerBody)
 }
 
-$("#loginForm").validate({
+$('#loginForm').submit(function(e){
+    e.preventDefault();
+    //Pressed enter in username input
+    if($('#signInStepUserKey').hasClass('active')){
+        showLoginStep2();
+        return 
+    }
+    if(!$("#loginForm").valid()){
+        return  
+    }
+    $('#loginForm input[type="submit"]').attr('disabled', 'disabled').addClass('disabled')
+    showLoading()
+    $.ajax({
+        type: "POST",
+        url: "/Members/Login",
+        data: $("#loginForm").serialize(),
+        success: function (json) {
+            var loginReply = JSON.parse(json);
+            if (loginReply.result) {
+                //Success Login
+                if (loginReply.redirectAddress) {
+                    window.location.href = loginReply.redirectAddress;
+                } else {
+                    window.location.href = "http://" + location.hostname + ":" + location.port;
+                }
+            } else {
+                //Failed Login
+                if (loginReply.invalidLoginKey || loginReply.invalidPassword) {
+                    showLoginStep1();
+                    showWarn("Invalid username or password!");
+                }
+            }
+            //removeLoading();
+        },
+        error: function () {
+            //removeLoading();
+        }
+    })
+    $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
+    removeLoading()
+})
+validator = $("#loginForm").validate({
+    onsubmit : false,
     errorClass: "form-error",
     rules: {
         LoginKey: {
@@ -97,111 +86,95 @@ $("#loginForm").validate({
 
 /* Sign In END */
 /* Sign Up  */
-if(document.getElementById("r_day")){
-    var options = "";
-    for(var i = 1; i<=31; i++)
-        options += '<option value="' + i + '">' + i + '</option>';
-    
-    document.getElementById("r_day").innerHTML = options;
-}
-if(document.getElementById("r_month")){
-    var options = "";
-    for(var i = 1; i<=12; i++)
-        options += '<option value="' + i + '">' + i + '</option>';
-    
-    document.getElementById("r_month").innerHTML = options;
-}
-if(document.getElementById("r_year")){
-    var options = "";
-    for(var i = new Date().getFullYear() - 13; i>new Date().getFullYear() - 113; i--)
-        options += '<option value="' + i + '">' + i + '</option>';
-    
-    document.getElementById("r_year").innerHTML = options;
-}
+$(document).ready(function(){
+    if($('#r_day').length > 0){
+        var options = "";
+        for(var i = 1; i<=31; i++)
+            options += '<option value="' + i + '">' + i + '</option>';
+        $('#r_day').html(options)
+    }
+    if($('#r_month').length > 0){
+        var options = "";
+        for(var i = 1; i<=12; i++)
+            options += '<option value="' + i + '">' + i + '</option>';
+        $('#r_month').html(options)
+    }
+    if($('#r_year').length > 0){
+        var options = "";
+        for(var i = new Date().getFullYear() - 13; i>new Date().getFullYear() - 113; i--)
+            options += '<option value="' + i + '">' + i + '</option>';
+        $('#r_year').html(options)
+    }
+})
 
-if(document.getElementById("signUpNext1"))
-    document.getElementById("signUpNext1").addEventListener("click", () => showSignUpStep2());
-if(document.getElementById("signUpBack2"))
-    document.getElementById("signUpBack2").addEventListener("click", () => showSignUpStep1());
-if(document.getElementById("signUpNext2"))
-    document.getElementById("signUpNext2").addEventListener("click", () => showSignUpStepSubmit());
-if(document.getElementById("signUpBack3"))
-    document.getElementById("signUpBack3").addEventListener("click", () => showSignUpStep2());
-    
+$('#signUpNext1').click(showSignUpStep2)
+$('#signUpBack2').click(showSignUpStep1)
+$('#signUpNext2').click(showSignUpStepSubmit)
+$('#signUpBack3').click(showSignUpStep2)
 
 function showSignUpStep1(){
-    document.getElementById("signUpStep1").classList.add("active");
-    document.getElementById("signUpStep1").classList.remove("passive");
-    document.getElementById("signUpStep2").classList.remove("active");
-    document.getElementById("signUpStep2").classList.add("passive");
+    $('#signUpStep2').removeClass('active').addClass('passive')
+    $('#signUpStep1').removeClass('passive').addClass('active')
+    $('#r_user_name').focus()
 }
 function showSignUpStep2(){
     if(!$("#r_user_name").valid() || !$("#r_eposta").valid() || !$("#r_password").valid())
         return;
-    document.getElementById("signUpStep1").classList.add("passive");
-    document.getElementById("signUpStep1").classList.remove("active");
-    document.getElementById("signUpStep2").classList.remove("passive");
-    document.getElementById("signUpStep2").classList.add("active");
-    document.getElementById("signUpStepSubmit").classList.add("passive");
-    document.getElementById("signUpStepSubmit").classList.remove("active");
+    $('#signUpStep1').removeClass('active').addClass('passive')
+    $('#signUpStepSubmit').removeClass('active').addClass('passive')
+    $('#signUpStep2').removeClass('passive').addClass('active')
+    $('#r_rname').focus()
 }
 function showSignUpStepSubmit(){
     if(!$("#r_rname").valid() || !$("#r_surname").valid())
         return;
-    document.getElementById("signUpStep2").classList.add("passive");
-    document.getElementById("signUpStep2").classList.remove("active");
-    document.getElementById("signUpStepSubmit").classList.remove("passive");
-    document.getElementById("signUpStepSubmit").classList.add("active");
+    $('#signUpStep2').removeClass('active').addClass('passive')
+    $('#signUpStepSubmit').removeClass('passive').addClass('active')
+    $('#r_day').focus()
 }
-
-if(document.getElementById("signUpForm"))
-    document.getElementById("signUpForm").addEventListener("submit", function formControl(e) {
-        e.preventDefault();
-        //Submit form
-        if (document.getElementById("signUpStepSubmit").classList.contains("active")) {
-            if(!$("#signUpForm").valid()){
-                showWarn("There are invalid inputs!");
-                return;
-            }
-            if(!validBirthDate()){
-                if(document.getElementById("r_date-error"))
-                    document.getElementById("r_date-error").innerHTML = "Invalid date";
-                return;
-            }
-
-            showLoading(document.getElementById("dk-signin-box").querySelector(".box-content-sec"));
-
-            $.ajax({
-                type: "POST",
-                url: "/Members/",
-                data: $("#signUpForm").serialize(),
-                success: function (json) {
-
-                },
-                error: function () {
-                }
-            })
-
-            removeLoading();
-        } else {
-            e.preventDefault();
-            signUpNextStep();
-        }
-    });
+function showSignUpStepResult(){
+    $('#signUpStepSubmit').removeClass('active').addClass('passive')
+    $('#signUpStepResult').removeClass('passive').addClass('active')
+}
 function signUpNextStep(){
-    var idOfActiveStep = document.getElementById("signUpForm").querySelector(".register-steps.active").getAttribute("id");
+    idOfActiveStep = $('#signUpForm .register-steps.active').attr('id');
     switch(idOfActiveStep){
         case "signUpStep1": showSignUpStep2(); break;
         case "signUpStep2": showSignUpStepSubmit(); break;
         default: alert("Error"); break;
     }
 }
-function showSignUpStepResult(){
-    document.getElementById("signUpStepSubmit").classList.add("passive");
-    document.getElementById("signUpStepSubmit").classList.remove("active");
-    document.getElementById("signUpStepResult").classList.remove("passive");
-    document.getElementById("signUpStepResult").classList.add("active");
-}
+$('#signUpForm').submit(function(e){
+    e.preventDefault();
+    //Submit form
+    if ($('#signUpStepSubmit').hasClass('active')) {
+        if(!$("#signUpForm").valid()){
+            showWarn("There are invalid inputs!");
+            return;
+        }
+        if(!validBirthDate()){
+            $('#r_date-error').html('Invalid date')
+            return;
+        }
+
+        $('#loginForm input[type="submit"]').attr('disabled', 'disabled').addClass('disabled')
+        showLoading()
+        $.ajax({
+            type: "POST",
+            url: "/Members/",
+            data: $("#signUpForm").serialize(),
+            success: function (json) {
+
+            },
+            error: function () {
+            }
+        })
+        $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
+        removeLoading()
+    } else {
+        signUpNextStep();
+    }
+})
 
 //Validations
 jQuery.validator.addMethod("usernameChars", function(val, e){
@@ -222,6 +195,7 @@ jQuery.validator.addMethod("isNotEmptyOrNull", function(val, e){
 
 
 $("#signUpForm").validate({
+    onsubmit: false,
     errorClass: "form-error",
     //errorLabelContainer: "#form_errors ul",
     //wrapper: "li",
@@ -291,17 +265,17 @@ function validBirthDate(){
 /* Sign Up END */
 
 function showLoading(e){
-    var html = "";
-    html += '<div id="dk-loading-sec" class="dk-loading-sec active">';
-    html +=     '<div class="out-of-middle"><div class="middle"><div class="cssload-container"><div class="cssload-lt"></div><div class="cssload-rt"></div><div class="cssload-lb"></div><div class="cssload-rb"></div></div></div></div>';
-    html += '</div>';
-    e.innerHTML += html;
-    return;
+    body = `<div class="cover-content" id="loadingScreen"><div class="out-of-middle"><div class="middle"><div style="text-align:center"><div class="lds-ripple"><div></div><div></div></div></div></div></div></div>`
+    $('#dk-signin-box .box-content-sec').append(body)
 }
 function removeLoading(){
-    var e = document.getElementById("dk-loading-sec");
-    if(e)
-        e.parentElement.removeChild(e);
+    $('#loadingScreen').remove()
+}
 
-    return;
+function showWarn(str) {
+    warningBody = `<div class="dk-alert bg-danger"><p>${str}</p></div>`
+    $('#dk-signin-box .warnings').html(warningBody)
+}
+function clearWarnings() {
+    $('#dk-signin-box .warnings').html("")
 }

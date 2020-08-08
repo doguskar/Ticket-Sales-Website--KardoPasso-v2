@@ -351,7 +351,7 @@ nav.dk-nav .dk-nav-sec{
 	border-top:1px solid  var(--nav-clr2);
 	border-bottom:1px solid  var(--nav-clr2);
 }
-.dk-btn{
+nav.dk-nav .dk-btn{
 	border-radius:0;
 	outline:none;
 	display:inline-block;
@@ -367,16 +367,16 @@ nav.dk-nav .dk-nav-sec{
 	margin:5px;
 	transition:var(--trans-sc);
 }
-.dk-btn:hover{
+nav.dk-nav .dk-btn:hover{
 	border-color:var(--nav-clr5);
 	color:var(--nav-clr5);
 }
-.dk-btn.sharp-btn{
+nav.dk-nav .dk-btn.sharp-btn{
 	border-radius:0px;
 	padding:10px 20px;
 	font-size:20px;
 }
-.dk-btn.round-btn{
+nav.dk-nav .dk-btn.round-btn{
 	width:50px;
 	max-height:50px;
 	border-radius:100%;
@@ -387,7 +387,7 @@ nav.dk-nav .dk-nav-sec{
 	color:var(--nav-clr6);
 	transition:0.7s transform;
 }
-.dk-btn.round-btn:hover{
+nav.dk-nav .dk-btn.round-btn:hover{
 	transform: rotate(360deg);
 	border-color:var(--nav-clr3);
 }

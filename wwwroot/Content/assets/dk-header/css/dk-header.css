@@ -94,6 +94,7 @@ nav.dh-h-nav > ul > li > a, nav.dh-h-nav > ul > li > span{
 	color:var(--clr-6);
 	transition:0.3s border-color,0.3s background-color, 0.3s color;
 	cursor:pointer;
+	font-weight: normal;
 }
 nav.dh-h-nav > ul > li > a:hover{
 	border-color:var(--clr-5);
@@ -142,6 +143,7 @@ nav.dh-h-nav ul > li > ul > li > a{
 	padding:5px 10px;
 	font-size:14px;
 	color:var(--clr-6);
+	font-weight:normal;
 }
 nav.dh-h-nav ul > li > ul > li > a:hover{
 	background-color:var(--clr-2);
