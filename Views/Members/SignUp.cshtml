@@ -1,0 +1,146 @@
+﻿@model Kardo20.Models.Members.SignUpRequest
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/_Centered.cshtml";
+}
+@section Head{
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/dk-style2019/assets/TextInputEffects/css/set2.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/cssload/lds_ripple.css" />
+}
+
+<div class="dk-signin-box" id="dk-signin-box">
+    <div class="box-head-sec">
+        <a href="/">
+            <img src="~/Content/img/systemPics/kardo-icon.png" />
+            <div class="header">Kardo</div>
+        </a>
+        <div class="back-btn"><a href="/Members/Login"><i class="fa fa-chevron-left"></i></a></div>
+    </div>
+    <div class="box-content-sec">
+        <div class="box-content-register">
+            <form id="signUpForm" method="post" asp-controller="Members" asp-action="SignUp" asp-antiforgery="true">
+                <div id="form_errors" class="warnings"></div>
+                <div class="register-steps active" id="signUpStep1">
+                    <div class="header">Sing Up</div>
+                    <div class="text" style="margin-bottom: 0;">Your Kardo account opens the doors to an advantageous world.</div>
+
+                    <span class="input input--nao" style="margin-bottom: 0;">
+                        <input class="input__field input__field--nao" type="text" asp-for="Username" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Username</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <label id="Username-error" class="form-error" for="Username"></label>
+
+                    <span class="input input--nao" style="margin-bottom: 0;">
+                        <input class="input__field input__field--nao" type="email" asp-for="EMail" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">E-mail</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <label id="EMail-error" class="form-error" for="EMail"></label>
+
+                    <span class="input input--nao" style="margin-bottom: 0;">
+                        <input class="input__field input__field--nao" type="password" asp-for="Password" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Password</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <label id="Password-error" class="form-error" for="Password"></label>
+
+                    <input id="signUpNext1" type="button" value="Next" class="dk-btn btn-wide btn-primary" style="margin-top: 10px;" />
+
+
+                    <div class="text warning">By choosing <b>next</b>, you agree to the <a href="#">Kardo Service Agreement</a> and the <a href="#">privacy and cookies statement</a></div>
+                </div>
+                <div class="register-steps passive" id="signUpStep2">
+                    <div class="header">Add Details</div>
+                    <div class="text" style="margin-bottom: 0;">We need some more information to complete your account setup.</div>
+
+                    <span class="input input--nao" style="margin-bottom: 0;">
+                        <input class="input__field input__field--nao" type="text" asp-for="Name" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Name</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <label id="Name-error" class="form-error" for="Name"></label>
+
+                    <span class="input input--nao" style="margin-bottom: 0;">
+                        <input class="input__field input__field--nao" type="text" asp-for="Surname" />
+                        <label class="input__label input__label--nao">
+                            <span class="input__label-content input__label-content--nao">Surname</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                        </svg>
+                    </span>
+                    <label id="Surname-error" class="form-error" for="Surname"></label>
+
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-6" style="padding-right:5px"><input id="signUpBack2" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
+                        <div class="col-6" style="padding-left:5px"><input id="signUpNext2" type="button" value="Next" class="dk-btn btn-wide btn-primary" /></div>
+                    </div>
+                </div>
+                <div class="register-steps passive" id="signUpStepSubmit">
+                    <div class="header">Add Details</div>
+                    <div class="text">We need some more information to complete your account setup.</div>
+                    <label style="display:inline-block; margin-bottom: 10px; font-size:14px; font-weight:bold">Date of Birth</label>
+                    <div class="row">
+                        <input type="hidden" asp-for="BornDate" value="2007-01-01" />
+                        <div class="col-4" style="padding-right: 5px;">
+                            <select name="r_day" id="r_day" style="margin-bottom: 0;"></select>
+                        </div>
+                        <div class="col-4" style="padding-right: 5px; padding-left: 5px;">
+                            <select name="r_month" id="r_month" style="margin-bottom: 0;"></select>
+                        </div>
+                        <div class="col-4" style="padding-left: 5px;">
+                            <select name="r_year" id="r_year" style="margin-bottom: 0;"></select>
+                        </div>
+                    </div>
+                    <label id="r_date-error" class="form_error"></label>
+
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-6" style="padding-right:5px"><input id="signUpBack3" type="button" value="Back" class="dk-btn btn-wide btn-default " /></div>
+                        <div class="col-6" style="padding-left:5px"><input id="signUpNext3" type="submit" value="Register" class="dk-btn btn-wide btn-primary" /></div>
+                    </div>
+                </div>
+                <div class="register-steps passive" id="signUpStepResult">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="out-of-middle">
+                                <div class="middle">
+                                    <div class="txt-align-c">
+                                        <div class="header">Registration is completed successfully!</div>
+                                        <img src="~/Content/img/systemPics/checkIcon2.gif" alt="checkIcon" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a href="/Members/Login" class="dk-btn btn-wide btn-primary">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Content/assets/jquery/jquery-3.4.1.min.js"></script>
+    <partial name="Partials/_ValidationScriptsPartial" />
+    <script type="text/javascript" src="~/Content/js/main.js"></script>
+    <script type="text/javascript" src="~/Content/js/members.js"></script>
+}

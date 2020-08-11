@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Kardo20.Models;
 using Kardo20.Models.DB;
+using Kardo20.Models.Members;
 using Kardo2020.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -128,20 +131,22 @@ namespace Kardo20.Controllers
         }
         private bool IsCorrectPassword(string recivedPassword, string validPassword)
         {
+            return GetHashedPassword(recivedPassword) == validPassword;
+        }
+        private string GetHashedPassword(string password)
+        {
             string hashedMd5 = "", hashedSha256 = "";
             using (var sha256 = SHA256.Create())
             {
-                var result = sha256.ComputeHash(Encoding.ASCII.GetBytes(recivedPassword));
+                var result = sha256.ComputeHash(Encoding.ASCII.GetBytes(password));
                 hashedSha256 = Convert.ToBase64String(result);
             }
             using (var md5 = MD5.Create())
             {
                 var result = md5.ComputeHash(Encoding.ASCII.GetBytes(hashedSha256));
-                //hashedMd5 = Encoding.ASCII.GetString(result);
-                //hashedMd5 = BitConverter.ToString(result).Replace("-","");
                 hashedMd5 = Convert.ToBase64String(result);
             }
-            return hashedMd5 == validPassword;
+            return hashedMd5;
         }
         private int GetLastLoginAttempts(int userId)
         {
@@ -364,6 +369,79 @@ namespace Kardo20.Controllers
                 CheckCookies();
             }
             return JsonConvert.SerializeObject(Sessions.UserInfo);
+        }
+        
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Obsolete]
+        public string SignUp(SignUpRequest request)
+        {
+            SignUpReply reply = new SignUpReply();
+            if (!_CheckUsername(request.Username))
+            {
+                reply.usedUsername = true;
+                goto lblReturn;
+            }
+            if (!_CheckEMail(request.EMail))
+            {
+                reply.usedEMail = true;
+                goto lblReturn;
+            }
+            var textInfo = CultureInfo.CurrentCulture.TextInfo;
+            request.Name = textInfo.ToTitleCase(request.Name.Trim());
+            request.Surname= textInfo.ToTitleCase(request.Surname.Trim());
+
+            request.Password = GetHashedPassword(request.Password);
+            using (var ctx = new kardoContext())
+            {
+                var r = ctx.Database.ExecuteSqlCommand(
+                        "procInsertUser @USERNAME, @EMAIL, @PASSWORD, @NAME, @SURNAME, @BORN_DATE",
+                        new SqlParameter("@USERNAME", request.Username),
+                        new SqlParameter("@EMAIL", request.EMail),
+                        new SqlParameter("@PASSWORD", request.Password),
+                        new SqlParameter("@NAME", request.Name),
+                        new SqlParameter("@SURNAME", request.Surname),
+                        new SqlParameter("@BORN_DATE", request.BornDate)
+                    );
+                if (r > 0)
+                {
+                    reply.result = true;
+                }
+            }
+            lblReturn:
+            return JsonConvert.SerializeObject(reply);
+        }
+        [HttpPost]
+        public bool CheckUsername()
+        {
+            return _CheckUsername(Request.Form["Username"]);
+        }
+        private bool _CheckUsername(string Username)
+        {
+            Users u = GetUserFromLoginKey(Username);
+            if (u == null)
+            {
+                return true;
+            }
+            return false;
+        }
+        [HttpPost]
+        public bool CheckEMail()
+        {
+            return _CheckEMail(Request.Form["EMail"]);
+        }
+        private bool _CheckEMail(string EMail)
+        {
+            Users u = GetUserFromLoginKey(EMail);
+            if (u == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -7,7 +7,7 @@ function showLoginStep1() {
     $('#signInStepPassword').removeClass('active').addClass('passive')
     $('#submittedUserKey').removeClass('active').addClass('passive')
     $('#LoginKey').focus()
-    footerBody = `<div>Don't you have any account? <a href="javascript:;" id="register_link">Create an account now!</a> </div>`
+    footerBody = `<div>Don't you have any account? <a href="/Members/SignUp" id="register_link">Create an account now!</a> </div>`
     $('#dk-signin-box .box-footer-sec').html(footerBody)
 }
 function showLoginStep2() {
@@ -55,14 +55,15 @@ $('#loginForm').submit(function(e){
                     showWarn("Invalid username or password!");
                 }
             }
-            //removeLoading();
+            $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
+            removeLoading();
         },
         error: function () {
-            //removeLoading();
+            $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
+            removeLoading();
         }
     })
-    $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
-    removeLoading()
+    
 })
 validator = $("#loginForm").validate({
     onsubmit : false,
@@ -115,24 +116,34 @@ $('#signUpBack3').click(showSignUpStep2)
 function showSignUpStep1(){
     $('#signUpStep2').removeClass('active').addClass('passive')
     $('#signUpStep1').removeClass('passive').addClass('active')
-    $('#r_user_name').focus()
+    $('#Username').focus()
 }
-function showSignUpStep2(){
-    if(!$("#r_user_name").valid() || !$("#r_eposta").valid() || !$("#r_password").valid())
+function showSignUpStep2() {
+    clearWarnings()
+    if(!$("#Username").valid() || !$("#EMail").valid() || !$("#Password").valid())
         return;
+
+    $('#signUpNext1').attr('disabled', 'disabled').addClass('disabled')
+    showLoading()
+    checkUsername()
+}
+function _showSignUpStep2() {
+    $('#signUpNext1').removeAttr('disabled').removeClass('disabled')
+    removeLoading()
     $('#signUpStep1').removeClass('active').addClass('passive')
     $('#signUpStepSubmit').removeClass('active').addClass('passive')
     $('#signUpStep2').removeClass('passive').addClass('active')
-    $('#r_rname').focus()
+    $('#Name').focus()
 }
 function showSignUpStepSubmit(){
-    if(!$("#r_rname").valid() || !$("#r_surname").valid())
+    if(!$("#Name").valid() || !$("#Surname").valid())
         return;
     $('#signUpStep2').removeClass('active').addClass('passive')
     $('#signUpStepSubmit').removeClass('passive').addClass('active')
     $('#r_day').focus()
 }
-function showSignUpStepResult(){
+function showSignUpStepResult() {
+    removeLoading()
     $('#signUpStepSubmit').removeClass('active').addClass('passive')
     $('#signUpStepResult').removeClass('passive').addClass('active')
 }
@@ -156,17 +167,26 @@ $('#signUpForm').submit(function(e){
             $('#r_date-error').html('Invalid date')
             return;
         }
-
+        $('#BornDate').val(`${$('#r_year').val()}-${$('#r_month').val()}-${$('#r_day').val()}`)
+        
         $('#loginForm input[type="submit"]').attr('disabled', 'disabled').addClass('disabled')
         showLoading()
         $.ajax({
             type: "POST",
-            url: "/Members/",
+            url: "/Members/SignUp",
             data: $("#signUpForm").serialize(),
             success: function (json) {
-
+                signUpReply = JSON.parse(json)
+                if (signUpReply.result) {
+                    showSignUpStepResult()
+                } else {
+                    showWarn("Something went wrong.")
+                    removeLoading()
+                }
             },
             error: function () {
+                showWarn("Something went wrong.")
+                removeLoading()
             }
         })
         $('#loginForm input[type="submit"]').removeAttr('disabled').removeClass('disabled')
@@ -175,6 +195,48 @@ $('#signUpForm').submit(function(e){
         signUpNextStep();
     }
 })
+function checkUsername() {
+    $.ajax({
+        type: "POST",
+        url: "/Members/CheckUsername",
+        data: { Username: $('#Username').val() },
+        success: function (bool) {
+            if (bool) {
+                checkEMail()
+            } else {
+                showWarn("Username is used")
+                $('#signUpNext1').removeAttr('disabled').removeClass('disabled')
+                removeLoading()
+            }
+        },
+        error: function () {
+            showWarn("Something Went wrong.")
+            $('#signUpNext1').removeAttr('disabled').removeClass('disabled')
+            removeLoading()
+        }
+    })
+}
+function checkEMail() {
+    $.ajax({
+        type: "POST",
+        url: "/Members/CheckEMail",
+        data: { EMail: $('#EMail').val() },
+        success: function (bool) {
+            if (bool) {
+                _showSignUpStep2()
+            } else {
+                showWarn("E-mail is used")
+                $('#signUpNext1').removeAttr('disabled').removeClass('disabled')
+                removeLoading()
+            }
+        },
+        error: function () {
+            showWarn("Something Went wrong.")
+            $('#signUpNext1').removeAttr('disabled').removeClass('disabled')
+            removeLoading()
+        }
+    })
+}
 
 //Validations
 jQuery.validator.addMethod("usernameChars", function(val, e){
@@ -200,28 +262,28 @@ $("#signUpForm").validate({
     //errorLabelContainer: "#form_errors ul",
     //wrapper: "li",
     rules: {
-        r_user_name: {
+        Username: {
             required: true,
             minlength: 3,
             maxlength: 32,
             usernameChars: true,
             singleDotOrUnderscore: true
         },
-        r_eposta: {
+        EMail: {
             required: true,
             email: true
         },
-        r_password: {
+        Password: {
             required: true,
             minlength: 6,
             maxlength: 255
         },
-        r_rname: {
+        Name: {
             required: true,
             isNotEmptyOrNull: true,
             turkishCharsWithSpace: true
         },
-        r_surname: {
+        Surname: {
             required: true,
             isNotEmptyOrNull: true,
             turkishCharsWithSpace: true
@@ -229,20 +291,20 @@ $("#signUpForm").validate({
 
     },
     messages: {
-        r_user_name: {
+        Username: {
             required: "Username is required",
             minlength: jQuery.validator.format("Please, at least {0} characters are necessary"),
             maxlength: jQuery.validator.format("Please, at most {0} characters are necessary"),
             usernameChars: "Username can contains english chars, numbers, dot and underscore.",
             singleDotOrUnderscore: "You cannot use dots or underscores in a row."
         },
-        r_eposta: {
+        EMail: {
         },
-        r_password: {
+        Password: {
         },
-        r_rname: {
+        Name: {
         },
-        r_surname: {
+        Surname: {
         }
     }
 });
@@ -268,7 +330,7 @@ function showLoading(e){
     body = `<div class="cover-content" id="loadingScreen"><div class="out-of-middle"><div class="middle"><div style="text-align:center"><div class="lds-ripple"><div></div><div></div></div></div></div></div></div>`
     $('#dk-signin-box .box-content-sec').append(body)
 }
-function removeLoading(){
+function removeLoading() {
     $('#loadingScreen').remove()
 }
 
@@ -278,4 +340,10 @@ function showWarn(str) {
 }
 function clearWarnings() {
     $('#dk-signin-box .warnings').html("")
+}
+function returnTrue() {
+    return true
+}
+function returnFalse() {
+    return false
 }

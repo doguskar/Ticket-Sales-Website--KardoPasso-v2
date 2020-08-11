@@ -11,11 +11,11 @@
 
 <div class="dk-signin-box" id="dk-signin-box">
     <div class="box-head-sec">
-        <a href="index.html">
+        <a href="/">
             <img src="~/Content/img/systemPics/kardo-icon.png" />
             <div class="header">Kardo</div>
         </a>
-        <div class="back-btn"><a href="index.html"><i class="fa fa-chevron-left"></i></a></div>
+        <div class="back-btn"><a href="/"><i class="fa fa-chevron-left"></i></a></div>
     </div>
     <!-- Password Section -->
     <div id="submittedUserKey" class="user-info passive">
@@ -25,7 +25,7 @@
     <!-- Password Section -->
     <div class="box-content-sec">
         <div class="box-content-login">
-            <form id="loginForm" method="post" asp-controller="Members" asp-action="Login">
+            <form id="loginForm" method="post" asp-controller="Members" asp-action="Login" asp-antiforgery="true">
                 <div class="login-steps active" id="signInStepUserKey">
                     <div class="header">Log In</div>
                     <div class="warnings"></div>
@@ -82,7 +82,7 @@
             </form>
         </div>
         <div class="box-footer-sec">
-            <div><p>Do not have you an account? <a href="javascript:;" id="register_link">Create an account!</a> </p></div>
+            <div><p>Do not have you an account? <a href="/Members/SignUp" id="register_link">Create an account!</a> </p></div>
         </div>
     </div>
 </div>
